@@ -1,0 +1,25 @@
+@(collections: List[ArchiveItCollection])
+<div class="row" id="main-collections-active">
+        <div class="col-md-12">
+          <div class="panel" id="colections-active-panel">
+            <div class="panel-heading">Active Collections</div>
+            <div class="panel-body">
+              <button class="btn btn-default" style="background-color:#999999;color:#fff;margin-bottom:5px;">
+                <span class="glyphicon glyphicon-plus"></span> CREATE NEW COLLECTION
+              </button>
+              <table class="table table-condensed">
+                <tr>
+                  <th>NAME</th>
+                  <th>MOST RECENT CRAWL</th>
+                  <th>NEXT SCHEDULED CRAWL</th>
+                </tr>
+                @for(collection <- collections) {
+                <tr>
+                  <td><p><a href="/collections/@collection.id">@collection.name</a></p></td>
+                  <td><p>@collection.dateLastCrawl.format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
+                  <td><p>@collection.dateNextCrawl.format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp;&nbsp;<button class="btn btn-default"> CRAWL NOW </button></p></td>
+                </tr>
+                }
+              </table>
+            </div>
+          </div>
