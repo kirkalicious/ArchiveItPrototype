@@ -1,4 +1,4 @@
-@(title: String, collections: List[ArchiveItCollection])(content: Html)
+@(title: String)(mainContent: Html)(mainSidebar: Html)
 
 <!DOCTYPE html>
 
@@ -20,9 +20,9 @@
     	<div class="container" id="container-main">
   		  <div class="row" id="main">
   		    <div class="col-md-9" id="main-view">
-  			<section class="main-content">@all_collections(collections)</section>
+  			<section class="main-content">@mainContent</section>
   			</div>
-  			<section class="main-sidebar">@sidebar.main_sidebar()</section>
+  			<section class="main-sidebar">@mainSidebar</section>
   		  </div>
   		 </div>
   		</section>

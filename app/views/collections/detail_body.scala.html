@@ -1,0 +1,126 @@
+@(collection: ArchiveItCollection)
+<script>
+$(document).ready(function(){
+
+	$("#collectionPrivacy").change(function() {
+		$.ajax({
+			beforeSend: function(){
+     			$('#loading-indicator').show();
+   			},
+   			complete: function(){
+     			$('#loading-indicator').hide();
+   			},
+			type: "PUT",
+			url: "/collections/" + $(this).attr("collectionId"),
+			data: {privacy: $(this).find("option:selected").val()}
+			})
+			.error(function( msg ) {
+				alert( "Unable to update privacy");
+			});
+	});
+	$("#collectionStatus").change(function() {
+		var request = {
+			beforeSend: function(){
+     			$('#loading-indicator').show();
+   			},
+   			complete: function(){
+     			$('#loading-indicator').hide();
+   			},
+			type: "PUT",
+			url: "/collections/" + $(this).attr("collectionId"),
+			data: {status: $(this).find("option:selected").val()}
+			};
+		console.log(request);
+		$.ajax(request)
+			.error(function( msg ) {
+			alert( "Unable to update status");
+		});
+	});
+	$("#collectionFrequency").change(function() {
+		var request = {
+			beforeSend: function(){
+     			$('#loading-indicator').show();
+   			},
+   			complete: function(){
+     			$('#loading-indicator').hide();
+   			},
+			type: "PUT",
+			url: "/collections/" + $(this).attr("collectionId"),
+			data: {frequency: $(this).find("option:selected").val()}
+			};
+		console.log(request);
+		$.ajax(request)
+			.error(function( msg ) {
+			alert( "Unable to update frequency");
+		});
+	});
+});
+
+</script>
+<img src="/images/loading.gif" id="loading-indicator" style="display:none" />
+      <div class="row" id="main-collections-active">
+        <div class="col-md-12">
+          <div class="panel" id="colection-head-panel">
+            <div class="panel-heading">Collection</div>
+            <div class="panel-body">
+              <div class="row" style="background-color:#f0f0f0">
+                <div class="col-md-5" style="padding-left:0px">
+                  <form action="@routes.ArchiveItCollections.edit(collection.getId())" method="POST">
+                  <button class="btn btn-default" style="background-color:#f0f0f0; margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
+                    <span class="glyphicon glyphicon-pencil" ></span>
+                  </button>
+                  <h2>@collection.getName()</h2>
+              	  </form>
+                </div>
+                <div class="col-md-3" style="padding-left:0px">
+                  <p> created on @collection.getDateCreated().format("MM/dd/yy")</p>
+                </div>
+                <div class="col-md-4" style="padding-left:0px">
+                  <select id="collectionPrivacy" collectionId="@collection.getId">
+                  	@for(p <- PrivacySetting.values()) {
+                  	  <option value="@p" @if(p == collection.getPrivacy()) {selected}>@p.getValue</option>
+                  	}
+                  </select>
+                  <select id="collectionStatus" collectionId="@collection.getId">
+                  	@for(s <- ArchiveItCollectionStatus.values()) {
+                  	  <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
+                  	}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="background-color:#666666">
+              <div class="col-md-12" >
+                <div class="btn-group">
+                  <button type="button" class="btn">CRAWL SCOPE</button>
+                  <button type="button" class="btn">COLLECTION METADATA</button>
+                  <button type="button" class="btn">DOCUMENT METADATA</button>
+                  <button type="button" class="btn">REPORTS</button>
+                  <button type="button" class="btn">MISSING URLS</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" id="colection-head-panel">
+            <div class="panel-heading">Crawling Activity</div>
+            <div class="panel-body">
+              <table class="table table-condensed">
+                <tr>
+                  <th>FREQUENCY</th>
+                  <th>MOST RECENT CRAWL</th>
+                  <th>NEXT SCHEDULED CRAWL</th>
+                </tr>
+                <tr>
+                  <td><select id="collectionFrequency" collectionId="@collection.getId">
+                  	@for(s <- CrawlFrequency.values()) {
+                  	  <option value="@s" @if(s == collection.getFrequency()) {selected}>@s.getValue</option>
+                  	}
+                  </select></td>
+                  <td>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
+                  <td>@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp; <button class="btn">CRAWL NOW</button></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>

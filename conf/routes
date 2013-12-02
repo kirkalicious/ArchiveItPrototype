@@ -5,12 +5,19 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+DELETE	/alerts/:id					controllers.Application.deleteAlert(id: Long)
+
 # Collections
 GET		/collections				controllers.ArchiveItCollections.list()
-GET		/collections/save			controllers.ArchiveItCollections.save()
+POST	/collections/save			controllers.ArchiveItCollections.save()
+POST	/collections/:id/edit		controllers.ArchiveItCollections.edit(id: Long)
 GET		/collections/:id			controllers.ArchiveItCollections.details(id: Long)
-#POST	/collections				controllers.ArchiveItCollections.save()
+PUT     /collections/:id			controllers.ArchiveItCollections.update(id: Long)
+POST	/collections/:id/activate	controllers.ArchiveItCollections.activateCollection(id: Long)
+POST	/collections/:id/deactivate	controllers.ArchiveItCollections.deactivateCollection(id: Long)
 
+# Map Bootstrap images
+GET     /assets/fonts/glyphicons-halflings-regular.eot            controllers.Assets.at(path="/public", file="/fonts/glyphicons-halflings-regular.eot")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

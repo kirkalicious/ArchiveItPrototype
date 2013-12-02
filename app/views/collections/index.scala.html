@@ -1,0 +1,10 @@
+@(title: String, alerts:List[AlertMessage], activeCollections:  List[ArchiveItCollection], inactiveCollections:List[ArchiveItCollection])
+
+@main(title) {
+	
+  	@collections.index_body(alerts, activeCollections, inactiveCollections)
+	  	
+} {
+	@sidebar.main_sidebar()
+}
+

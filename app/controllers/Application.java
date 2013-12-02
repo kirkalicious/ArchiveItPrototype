@@ -1,20 +1,25 @@
 package controllers;
 
-import java.util.List;
-
-import models.ArchiveItCollection;
+import models.AlertMessage;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
-
-import com.avaje.ebean.Ebean;
 
 public class Application extends Controller {
 
     public static Result index() {
-		List<ArchiveItCollection> all = Ebean.find(ArchiveItCollection.class)
-				.findList();
-		return ok(index.render("ArchiveIt Home", all));
+
+		return ArchiveItCollections.list();
     }
+
+	public static Result deleteAlert(Long id) {
+		AlertMessage message = AlertMessage.find.byId(id);
+
+		if (message != null) {
+			message.delete();
+			return ok();
+		} else {
+			return badRequest("Alert not found");
+		}
+	}
 
 }

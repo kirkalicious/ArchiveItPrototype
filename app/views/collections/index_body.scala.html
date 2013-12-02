@@ -1,0 +1,91 @@
+@(alerts: List[AlertMessage], activeCollections: List[ArchiveItCollection], inactiveCollections: List[ArchiveItCollection])
+
+@import helper._
+
+  <script>
+  $(document).ready(function(){
+    if ($("#messages-panel .alert").size() == 0	) {
+        $("#messages-panel").hide();
+    };
+    $(".alert").bind('closed.bs.alert', function () {
+    $.ajax({
+		type: "DELETE",
+		url: "/alerts/" + $(this).children().first().attr("alertId"),
+		data: { }
+		})
+		.error(function( msg ) {
+		alert( "Error deleting message on server: " + msg );
+	});
+      // if all alerts are dismissed, hide the 'Messages' panel
+      // size is 1 when closing the last alert
+      if ($("#messages-panel .alert").size() == 1) {
+        $("#messages-panel").hide();
+      }
+    });
+  });
+  </script>
+<div class="row" id="messages">
+  <div class="col-md-12">
+    <div class="panel panel-default" id="messages-panel">
+      <div class="panel-heading">Messages</div>
+      <div class="panel-body">
+        @for(alert <- alerts) {
+        <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" alertId="@alert.getId()">
+          <span class="glyphicon glyphicon-remove-sign"></span>
+          </button>
+          @alert.getMessage() &nbsp; <a href="@alert.getLink()" class="alert-link">View Details ></a>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>       
+<div class="row" id="main-collections-active">
+        <div class="col-md-12">
+           <div class="panel" id="colections-active-panel">
+            <div class="panel-heading">Active Collections</div>
+            <div class="panel-body">
+            <form action="@routes.ArchiveItCollections.save()" method="POST">
+              <button class="btn btn-default" style="background-color:#999999;color:#fff;margin-bottom:5px;">
+                <span class="glyphicon glyphicon-plus"></span> CREATE NEW COLLECTION
+              </button>
+              </form>
+              <table class="table table-condensed">
+                <tr>
+                  <th>NAME</th>
+                  <th>MOST RECENT CRAWL</th>
+                  <th>NEXT SCHEDULED CRAWL</th>
+                </tr>
+                @for(collection <- activeCollections) {
+                <tr>
+                  <td><p><a href="/collections/@collection.getId()">@collection.getName()</a></p></td>
+                  <td><p>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
+                  <td><p>@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp;&nbsp;<button class="btn btn-default"> CRAWL NOW </button></p></td></p></td>
+                </tr>
+                }
+              </table>
+            </div>
+          </div>
+          <div class="panel" id="colections-inactive-panel">
+            <div class="panel-heading">Inctive Collections</div>
+            <div class="panel-body">
+              <table class="table table-condensed">
+                <tr>
+                  <th>NAME</th>
+                  <th>LAST CRAWL</th>
+                  <th>&nbsp;</th>
+                </tr>
+                @for(collection <- inactiveCollections) {
+                <tr>
+                  <td><p><a href="/collections/@collection.getId()">@collection.getName()</a></p></td>
+                  <td><p>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
+                  <td><form action="@routes.ArchiveItCollections.activateCollection(collection.getId())" method="POST">
+                        <input class="btn btn-default" type="submit" value="Activate Collection">
+                      </form>
+                      </p></td>
+                </tr>
+                }
+              </table>
+            </div>
+          </div>

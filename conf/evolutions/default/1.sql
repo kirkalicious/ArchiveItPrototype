@@ -3,22 +3,32 @@
 
 # --- !Ups
 
+create table alert_message (
+  id                        bigint not null,
+  subscription_id           bigint,
+  message                   varchar(255),
+  link                      varchar(255),
+  constraint pk_alert_message primary key (id))
+;
+
 create table archive_it_collection (
   id                        bigint not null,
   name                      varchar(255),
-  frequency                 integer,
-  topic1                    integer,
-  topic2                    integer,
-  topic3                    integer,
+  frequency                 varchar(2),
+  topic1                    varchar(12),
+  topic2                    varchar(12),
+  topic3                    varchar(12),
   date_created              timestamp,
   date_last_crawl           timestamp,
   date_next_crawl           timestamp,
-  status                    integer,
-  constraint ck_archive_it_collection_frequency check (frequency in (0,1,2,3,4)),
-  constraint ck_archive_it_collection_topic1 check (topic1 in (0,1,2,3,4,5,6,7,8,9,10)),
-  constraint ck_archive_it_collection_topic2 check (topic2 in (0,1,2,3,4,5,6,7,8,9,10)),
-  constraint ck_archive_it_collection_topic3 check (topic3 in (0,1,2,3,4,5,6,7,8,9,10)),
-  constraint ck_archive_it_collection_status check (status in (0,1,2)),
+  status                    varchar(1),
+  privacy                   varchar(7),
+  constraint ck_archive_it_collection_frequency check (frequency in ('BM','W','M','2D','D')),
+  constraint ck_archive_it_collection_topic1 check (topic1 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
+  constraint ck_archive_it_collection_topic2 check (topic2 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
+  constraint ck_archive_it_collection_topic3 check (topic3 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
+  constraint ck_archive_it_collection_status check (status in ('D','I','A')),
+  constraint ck_archive_it_collection_privacy check (privacy in ('PRIVATE','PUBLIC')),
   constraint pk_archive_it_collection primary key (id))
 ;
 
@@ -33,11 +43,19 @@ create table metadata (
 create table seed (
   id                        bigint not null,
   url                       varchar(255),
-  type                      integer,
+  type                      varchar(8),
+  frequency                 varchar(2),
+  date_created              timestamp,
+  date_last_crawled         timestamp,
+  status                    varchar(1),
   collection_id             bigint,
-  constraint ck_seed_type check (type in (0,1,2)),
+  constraint ck_seed_type check (type in ('NEWS_RSS','ONE_PAGE','DEFAULT')),
+  constraint ck_seed_frequency check (frequency in ('BM','W','M','2D','D')),
+  constraint ck_seed_status check (status in ('D','I','A')),
   constraint pk_seed primary key (id))
 ;
+
+create sequence alert_message_seq;
 
 create sequence archive_it_collection_seq;
 
@@ -56,6 +74,8 @@ create index ix_seed_collection_2 on seed (collection_id);
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists alert_message;
+
 drop table if exists archive_it_collection;
 
 drop table if exists metadata;
@@ -63,6 +83,8 @@ drop table if exists metadata;
 drop table if exists seed;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists alert_message_seq;
 
 drop sequence if exists archive_it_collection_seq;
 

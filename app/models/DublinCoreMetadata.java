@@ -1,11 +1,56 @@
 package models;
 
+import com.avaje.ebean.annotation.EnumValue;
+
 public enum DublinCoreMetadata {
-	TITLE("Title"), CREATOR("Creator"), SUBJECT("Subject"), DESCRIPTION(
-			"Description"), PUBLISHER("Publisher"), CONTRIBUTOR("Contributor"), DATE(
-			"Date"), TYPE("Type"), FORMAT("Format"), IDENTIFIER("Identifier"), SOURCE(
-			"Source"), RELATION("Relation"), COVERAGE("Coverage"), RIGHTS(
-			"Rights"), COLLECTOR("Collector"), LANGUAGE("Language");
+
+	@EnumValue("TITLE")
+	TITLE("Title"),
+
+	@EnumValue("CREATOR")
+	CREATOR("Creator"),
+
+	@EnumValue("SUBJECT")
+	SUBJECT("Subject"),
+
+	@EnumValue("DESCRIPTION")
+	DESCRIPTION("Description"),
+
+	@EnumValue("PUBLISHER")
+	PUBLISHER("Publisher"),
+
+	@EnumValue("CONTRIBUTOR")
+	CONTRIBUTOR("Contributor"),
+
+	@EnumValue("DATE")
+	DATE("Date"),
+
+	@EnumValue("TYPE")
+	TYPE("Type"),
+
+	@EnumValue("FORMAT")
+	FORMAT("Format"),
+
+	@EnumValue("IDENTIFIER")
+	IDENTIFIER("Identifier"),
+
+	@EnumValue("SOURCE")
+	SOURCE("Source"),
+
+	@EnumValue("RELATION")
+	RELATION("Relation"),
+
+	@EnumValue("COVERAGE")
+	COVERAGE("Coverage"),
+
+	@EnumValue("RIGHTS")
+	RIGHTS("Rights"),
+
+	@EnumValue("COLLECTOR")
+	COLLECTOR("Collector"),
+
+	@EnumValue("LANGUAGE")
+	LANGUAGE("Language");
 
 	private String value;
 

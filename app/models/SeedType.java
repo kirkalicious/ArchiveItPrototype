@@ -1,8 +1,17 @@
 package models;
 
+import com.avaje.ebean.annotation.EnumValue;
+
 public enum SeedType {
-	DEFAULT("Default"), NEWS_RSS("News/RSS feed"), ONE_PAGE(
-			"Crawl one page only");
+
+	@EnumValue("DEFAULT")
+	DEFAULT("Default"),
+
+	@EnumValue("NEWS_RSS")
+	NEWS_RSS("News/RSS feed"),
+
+	@EnumValue("ONE_PAGE")
+	ONE_PAGE("Crawl one page only");
 
 	private String value;
 
@@ -10,7 +19,7 @@ public enum SeedType {
 		this.value = value;
 	}
 
-	String getValue() {
+	public String getValue() {
 		return this.value;
 	}
 }
