@@ -51,18 +51,25 @@ public class ArchiveItCollections extends Controller {
 			return badRequest();
 		}
 		System.out.println(cform.toString());
-		System.out.println("New privacy setting: " + cform.get().getPrivacy());
 
 		if (cform.get().getPrivacy() != null) {
 			c.setPrivacy(cform.get().getPrivacy());
+			System.out.println("New privacy setting: "
+					+ cform.get().getPrivacy());
 		}
 
 		if (cform.get().getStatus() != null) {
 			c.setStatus(cform.get().getStatus());
+			System.out
+					.println("New status setting: " + cform.get().getStatus());
+
 		}
 
 		if (cform.get().getFrequency() != null) {
 			c.setFrequency(cform.get().getFrequency());
+			System.out.println("New frequency setting: "
+					+ cform.get().getFrequency());
+
 		}
 		c.update();
 
