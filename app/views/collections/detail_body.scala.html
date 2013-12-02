@@ -82,7 +82,7 @@ $(document).ready(function(){
                   	}
                   </select>
                   <select id="collectionStatus" collectionId="@collection.getId">
-                  	@for(s <- ArchiveItCollectionStatus.values()) {
+                  	@for(s <- Status.values()) {
                   	  <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
                   	}
                   </select>
