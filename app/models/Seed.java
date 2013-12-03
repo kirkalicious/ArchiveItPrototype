@@ -23,6 +23,9 @@ public class Seed extends Model {
 	private Date dateCreated;
 	private Date dateLastCrawled;
 	private Status status;
+	private Boolean verified;
+	private String loginUsername;
+	private String loginPassword;
 
 	@ManyToOne
 	private ArchiveItCollection collection;
@@ -31,6 +34,7 @@ public class Seed extends Model {
 		this.id = id;
 		this.url = url;
 		this.type = t;
+		this.frequency = CrawlFrequency.DAILY;
 	}
 
 	@Override
@@ -96,5 +100,29 @@ public class Seed extends Model {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
+	public String getLoginUsername() {
+		return loginUsername;
+	}
+
+	public void setLoginUsername(String loginUsername) {
+		this.loginUsername = loginUsername;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
 	}
 }

@@ -1,7 +1,20 @@
-@(collection: ArchiveItCollection)
+@(collection: ArchiveItCollection, seedForm : Form[Seed])
+
+@import helper.twitterBootstrap._
 <script>
 $(document).ready(function(){
-
+    $("#active-seed-select").click(function(src) {
+       $(".seed-active").each(function() {
+         this.checked = src.target.checked;
+    	});
+    });
+    
+    $("#inactive-seed-select").click(function(src) {
+       $(".seed-inactive").each(function() {
+         this.checked = src.target.checked;
+    	});
+    });
+    
 	$("#collectionPrivacy").change(function() {
 		$.ajax({
 			beforeSend: function(){
@@ -60,7 +73,7 @@ $(document).ready(function(){
 <img src="/images/loading.gif" id="loading-indicator" style="display:none" />
       <div class="row" id="main-collections-active">
         <div class="col-md-12">
-          <div class="panel" id="colection-head-panel">
+          <div class="panel" id="collection-head-panel">
             <div class="panel-heading">Collection</div>
             <div class="panel-body">
               <div class="row" style="background-color:#f0f0f0">
@@ -101,7 +114,7 @@ $(document).ready(function(){
               </div>
             </div>
           </div>
-          <div class="panel" id="colection-head-panel">
+          <div class="panel" id="collection-head-panel">
             <div class="panel-heading">Crawling Activity</div>
             <div class="panel-body">
               <table class="table table-condensed">
@@ -121,6 +134,75 @@ $(document).ready(function(){
                 </tr>
               </table>
             </div>
+          </div>
+          <div class="panel" id="collection-head-panel">
+            <div class="panel-heading">Active Seeds</div>
+            <div class="panel-body">
+              
+              <div class="row" style="background-color:#f0f0f0;">
+              @helper.form(action = routes.ArchiveItCollections.addSeed(collection.getId)) {
+              	<div class="col-md-6">
+              	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL")
+                </div>
+                <div class="col-md-2">
+                  <input type="submit" class="btn btn-primary" value="ADD SEED">
+                </div>
+              }
+                <div class="col-md4">
+                	<a href="">+ Add seeds in bulk</a>
+                </div>
+              </div>
+              <table>
+                <tr>
+                  <th><input type="checkbox" id="active-seed-select"></th>
+                  <th>URL</th>
+                  <th>FREQUENCY</th>
+                  <th>MOST RECENT CRAWL</th>
+                  <th>CRAWL REPORT</th>
+                  <th>COMMENTS</th>
+                </tr>
+                @for(s <- collection.getSeeds()){
+                  @if(s.getStatus == Status.ACTIVE) {
+                  <tr>
+                    <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
+                    <td><a href="@s.getUrl" target="_blank">@s.getUrl</a></td>
+                    <td>@s.getFrequency().getValue()</td>
+                    <td>@s.getDateLastCrawled</td>
+                    <td><a href="">view ></a></td>
+                    <td><a href="">2 ></a></td>
+                  </tr>
+                  }
+                }
+              </table>
+            </div>
+            
+            <div class="panel" id="collection-head-panel">
+            <div class="panel-heading">Inctive Seeds</div>
+            <div class="panel-body">
+              
+              
+              <table>
+                <tr>
+                  <th><input type="checkbox" id="active-seed-select"></th>
+                  <th>URL</th>
+                  <th>LAST CRAWL</th>
+                  <th>CRAWL REPORT</th>
+                  <th>COMMENTS</th>
+                </tr>
+                @for(s <- collection.getSeeds()){
+                  @if(s.getStatus == Status.INACTIVE) {
+                  <tr>
+                    <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
+                    <td><a href="@s.getUrl" target="_blank">@s.getUrl</a></td>
+                    <td>@s.getDateLastCrawled</td>
+                    <td><a href="">view ></a></td>
+                    <td><a href="">2 ></a></td>
+                  </tr>
+                  }
+                }
+              </table>
+            </div>
+            
           </div>
         </div>
       </div>

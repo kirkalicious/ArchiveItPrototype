@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/conf/application.conf,/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/target/scala-2.10/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/conf/evolutions,/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/target/scala-2.10/classes/evolutions)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/conf/routes,/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/target/scala-2.10/classes/routes)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/conf/evolutions/default,/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/target/scala-2.10/classes/evolutions/default)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/conf/evolutions/default/1.sql,/Users/kirkalicious/play-framework/projects/ArchiveItPrototype/target/scala-2.10/classes/evolutions/default/1.sql)[0m

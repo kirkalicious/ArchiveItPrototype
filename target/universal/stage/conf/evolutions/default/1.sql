@@ -23,7 +23,7 @@ create table archive_it_collection (
   date_next_crawl           timestamp,
   status                    varchar(1),
   privacy                   varchar(7),
-  constraint ck_archive_it_collection_frequency check (frequency in ('BM','W','M','2D','D')),
+  constraint ck_archive_it_collection_frequency check (frequency in ('Q','S','BM','W','M','2D','D','A')),
   constraint ck_archive_it_collection_topic1 check (topic1 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
   constraint ck_archive_it_collection_topic2 check (topic2 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
   constraint ck_archive_it_collection_topic3 check (topic3 in ('UNIVERSITIES','GOV','GOV_COUNTIES','ARTS','POLITICS','COMPUTERS','BLOGS','EVENTS','SCIENCE','GOV_CITIES','SOCIETY')),
@@ -50,7 +50,7 @@ create table seed (
   status                    varchar(1),
   collection_id             bigint,
   constraint ck_seed_type check (type in ('NEWS_RSS','ONE_PAGE','DEFAULT')),
-  constraint ck_seed_frequency check (frequency in ('BM','W','M','2D','D')),
+  constraint ck_seed_frequency check (frequency in ('Q','S','BM','W','M','2D','D','A')),
   constraint ck_seed_status check (status in ('D','I','A')),
   constraint pk_seed primary key (id))
 ;

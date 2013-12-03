@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import models.AlertMessage;
@@ -21,6 +22,10 @@ import com.avaje.ebean.Ebean;
 
 public class ArchiveItCollections extends Controller {
 
+	private static final Form<ArchiveItCollection> collectionForm = Form
+			.form(ArchiveItCollection.class);
+	private static final Form<Seed> seedForm = Form.form(Seed.class);
+
 	public static Result list() {
 		List<ArchiveItCollection> active = ArchiveItCollection.find.where()
 				.eq("status", models.Status.ACTIVE).findList();
@@ -32,7 +37,7 @@ public class ArchiveItCollections extends Controller {
 
 	public static Result details(Long id) {
 		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
-		return ok(detail.render(c.getName() + " Collection", c));
+		return ok(detail.render(c.getName() + " Collection", c, seedForm));
 	}
 
 	public static Result edit(Long id) {
@@ -76,6 +81,22 @@ public class ArchiveItCollections extends Controller {
 		return ok();
 
 	}
+
+	public static Result addSeed(Long collectionId) {
+		Form<Seed> seedForm = Form.form(Seed.class).bindFromRequest();
+		ArchiveItCollection c = ArchiveItCollection.find.byId(collectionId);
+		Seed seed = seedForm.get();
+		seed.setCollection(c);
+		seed.setDateCreated(new Date());
+		seed.setDateLastCrawled(new Date());
+		seed.setFrequency(CrawlFrequency.DAILY);
+		seed.setType(SeedType.DEFAULT);
+		seed.setStatus(models.Status.ACTIVE);
+		c.getSeeds().add(seed);
+		Ebean.save(c);
+		return details(collectionId);
+	}
+
 	@Transactional
 	public static Result activateCollection(Long id) {
 		ArchiveItCollection c = ArchiveItCollection.find.byId(id);

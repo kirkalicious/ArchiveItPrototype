@@ -1,8 +1,8 @@
-@(title: String, collection:  ArchiveItCollection)
+@(title: String, collection:  ArchiveItCollection, seedForm: Form[Seed])
 
 @main(title) {
 	
-  	@collections.detail_body(collection)
+  	@collections.detail_body(collection, seedForm)
 	  	
 } {
 	@sidebar.help_sidebar()

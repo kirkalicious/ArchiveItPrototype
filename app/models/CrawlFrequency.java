@@ -17,7 +17,16 @@ public enum CrawlFrequency {
 	MONTHLY("Monthly"),
 
 	@EnumValue("BM")
-	BI_MONTHLY("Bi-monthly");
+	BI_MONTHLY("Bi-monthly"),
+
+	@EnumValue("Q")
+	QUARTERLY("Quarterly"),
+
+	@EnumValue("S")
+	SEMIANNUALLY("Semiannually"),
+
+	@EnumValue("A")
+	ANNUALLY("Annually");
 	
 	private String value;
 	
