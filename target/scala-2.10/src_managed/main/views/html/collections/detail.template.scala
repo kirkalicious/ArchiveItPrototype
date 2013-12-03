@@ -46,7 +46,7 @@ Seq[Any](format.raw/*1.73*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Tue Dec 03 14:55:26 PST 2013
+                    DATE: Tue Dec 03 15:54:14 PST 2013
                     SOURCE: /Users/kirkalicious/play-framework/projects/ArchiveItPrototype/app/views/collections/detail.scala.html
                     HASH: ad54ff06822331088737a0a397224b5dcf9a0a84
                     MATRIX: 818->1|983->72|1020->75|1039->86|1078->88|1119->95|1138->106|1193->140|1217->147|1255->149|1292->152|1307->159|1343->174
