@@ -10,6 +10,7 @@ import models.CrawlFrequency;
 import models.DublinCoreMetadata;
 import models.Metadata;
 import models.Seed;
+import models.SeedComment;
 import models.SeedType;
 import play.data.Form;
 import play.db.ebean.Transactional;
@@ -132,9 +133,25 @@ public class ArchiveItCollections extends Controller {
 				"This is a description");
 		data.collection = collection;
 		collection.metadata.add(data);
-		Seed seed = new Seed(null, "920special.com/", SeedType.DEFAULT);
-		collection.seeds.add(seed);
-		seed.setCollection(collection);
+
+		Seed seed1 = new Seed(null, "activeseed.com/", SeedType.DEFAULT);
+		SeedComment comment1 = new SeedComment("TEST: This seed is active",
+				seed1);
+
+		Seed seed2 = new Seed(null, "inactiveseed.com/", SeedType.DEFAULT);
+		seed2.setStatus(models.Status.INACTIVE);
+		SeedComment comment2 = new SeedComment("TEST: This seed is inactive",
+				seed2);
+
+		seed1.addComment(comment1);
+		seed2.addComment(comment2);
+
+		collection.seeds.add(seed1);
+		collection.seeds.add(seed2);
+
+		seed1.setCollection(collection);
+		seed2.setCollection(collection);
+
 		try {
 			Ebean.save(collection);
 

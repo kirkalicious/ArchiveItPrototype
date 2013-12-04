@@ -1,10 +1,13 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -26,6 +29,8 @@ public class Seed extends Model {
 	private Boolean verified;
 	private String loginUsername;
 	private String loginPassword;
+	@OneToMany(mappedBy = "seed", cascade = CascadeType.ALL)
+	private List<SeedComment> comments;
 
 	@ManyToOne
 	private ArchiveItCollection collection;
@@ -35,6 +40,12 @@ public class Seed extends Model {
 		this.url = url;
 		this.type = t;
 		this.frequency = CrawlFrequency.DAILY;
+		dateCreated = new Date();
+		dateLastCrawled = new Date();
+		status = models.Status.ACTIVE;
+		verified = false;
+		loginUsername = "";
+		loginPassword = "";
 	}
 
 	@Override
@@ -124,5 +135,13 @@ public class Seed extends Model {
 
 	public void setLoginPassword(String loginPassword) {
 		this.loginPassword = loginPassword;
+	}
+
+	public List<SeedComment> getComments() {
+		return this.comments;
+	}
+
+	public void addComment(SeedComment c) {
+		comments.add(c);
 	}
 }

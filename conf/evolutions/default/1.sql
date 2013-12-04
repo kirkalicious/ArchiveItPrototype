@@ -58,6 +58,16 @@ create table seed (
   constraint pk_seed primary key (id))
 ;
 
+create table seed_comment (
+  id                        bigint not null,
+  text                      varchar(255),
+  date_created              timestamp,
+  show                      boolean,
+  user_id                   bigint,
+  seed_id                   bigint,
+  constraint pk_seed_comment primary key (id))
+;
+
 create sequence alert_message_seq;
 
 create sequence archive_it_collection_seq;
@@ -66,10 +76,14 @@ create sequence metadata_seq;
 
 create sequence seed_seq;
 
+create sequence seed_comment_seq;
+
 alter table metadata add constraint fk_metadata_collection_1 foreign key (collection_id) references archive_it_collection (id) on delete restrict on update restrict;
 create index ix_metadata_collection_1 on metadata (collection_id);
 alter table seed add constraint fk_seed_collection_2 foreign key (collection_id) references archive_it_collection (id) on delete restrict on update restrict;
 create index ix_seed_collection_2 on seed (collection_id);
+alter table seed_comment add constraint fk_seed_comment_seed_3 foreign key (seed_id) references seed (id) on delete restrict on update restrict;
+create index ix_seed_comment_seed_3 on seed_comment (seed_id);
 
 
 
@@ -85,6 +99,8 @@ drop table if exists metadata;
 
 drop table if exists seed;
 
+drop table if exists seed_comment;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists alert_message_seq;
@@ -94,4 +110,6 @@ drop sequence if exists archive_it_collection_seq;
 drop sequence if exists metadata_seq;
 
 drop sequence if exists seed_seq;
+
+drop sequence if exists seed_comment_seq;
 
