@@ -3,6 +3,9 @@
 *.log
 tmp/
 dump/
+
+#OSX
+.DS_Store
  
 # Eclipse
 .settings
