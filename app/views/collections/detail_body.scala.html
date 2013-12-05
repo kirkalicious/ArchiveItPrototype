@@ -183,7 +183,7 @@ $(document).ready(function(){
               
               <table style="width: 100%">
                 <tr>
-                  <th><input type="checkbox" id="active-seed-select"></th>
+                  <th><input type="checkbox" id="inactive-seed-select"></th>
                   <th>URL</th>
                   <th>LAST CRAWL</th>
                   <th>CRAWL REPORT</th>
@@ -192,7 +192,7 @@ $(document).ready(function(){
                 @for(s <- collection.getSeeds()){
                   @if(s.getStatus == Status.INACTIVE) {
                   <tr>
-                    <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
+                    <td><input type="checkbox" class="seed-inactive" id="@s.getId"></td>
                     <td><a href="http://@s.getUrl" target="_blank">@s.getUrl</a></td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
