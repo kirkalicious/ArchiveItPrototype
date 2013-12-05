@@ -152,7 +152,7 @@ $(document).ready(function(){
                 	<a href="">+ Add seeds in bulk</a>
                 </div>
               </div>
-              <table>
+              <table style="width: 100%">
                 <tr>
                   <th><input type="checkbox" id="active-seed-select"></th>
                   <th>URL</th>
@@ -167,7 +167,7 @@ $(document).ready(function(){
                     <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
                     <td><a href="@s.getUrl" target="_blank">@s.getUrl</a></td>
                     <td>@s.getFrequency().getValue()</td>
-                    <td>@s.getDateLastCrawled</td>
+                    <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td><a href="">2 ></a></td>
                   </tr>
@@ -181,7 +181,7 @@ $(document).ready(function(){
             <div class="panel-body">
               
               
-              <table>
+              <table style="width: 100%">
                 <tr>
                   <th><input type="checkbox" id="active-seed-select"></th>
                   <th>URL</th>
@@ -194,7 +194,7 @@ $(document).ready(function(){
                   <tr>
                     <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
                     <td><a href="http://@s.getUrl" target="_blank">@s.getUrl</a></td>
-                    <td>@s.getDateLastCrawled</td>
+                    <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td><a href="">2 ></a></td>
                   </tr>
