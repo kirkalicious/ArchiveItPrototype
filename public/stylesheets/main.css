@@ -1,8 +1,13 @@
-th {
+th,
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
      background-color:#999999;
      color: white;
   }
-  table {
+table,
+table.table,
+table.dataTable {
      border-collapse:separate;
      border:1px;
      border-color:#fff;

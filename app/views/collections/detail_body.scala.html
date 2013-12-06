@@ -82,6 +82,9 @@ $(document).ready(function(){
 			alert( "Unable to update frequency");
 		});
 	});
+	
+	$("#seed-table-active").dataTable();
+	$("#seed-table-inactive").dataTable();
 });
 
 </script>
@@ -174,7 +177,8 @@ $(document).ready(function(){
                 	<a href="">+ Add seeds in bulk</a>
                 </div>
               </div>
-              <table class="table table-condensed" style="width: 100%">
+              <table id="seed-table-active" class="table table-condensed" style="width: 100%">
+                <thead>
                 <tr>
                   <th><input type="checkbox" id="active-seed-select"></th>
                   <th>URL</th>
@@ -183,6 +187,8 @@ $(document).ready(function(){
                   <th>CRAWL REPORT</th>
                   <th>COMMENTS</th>
                 </tr>
+                </thead>
+                <tbody>
                 @for(s <- collection.getSeeds()){
                   @if(s.getStatus == Status.ACTIVE) {
                   <tr>
@@ -191,16 +197,16 @@ $(document).ready(function(){
                     <td>@s.getFrequency().getValue()</td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
-                    <td> <form action="@routes.SeedController.details(s.getId())">
-                          <a href="" style="padding-right: 10px">2 ></a>
-                          <button class="btn btn-default inverse" style="background-color:#999999;color:#fff;margin-bottom:5px;">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                          </button>
-                        </form>
+                    <td>
+                        <a href="" style="padding-right: 10px">2 ></a>
+                        <a class="pull-right" href="@routes.SeedController.details(s.getId())">
+                            <span class="glyphicon glyphicon-pencil inverse"></span>
+                        </a>
                     </td>
                   </tr>
                   }
                 }
+                </tbody>
               </table>
             </div>
             
@@ -209,14 +215,17 @@ $(document).ready(function(){
             <div class="panel-body">
               
               
-              <table class="table table-condensed" style="width: 100%">
+              <table id="seed-table-inactive" class="table table-condensed" style="width: 100%">
+                <thead>
                 <tr>
-                  <th><input type="checkbox" id="inactive-seed-select"></th>
+                  <th ><input type="checkbox" id="inactive-seed-select"></th>
                   <th>URL</th>
                   <th>LAST CRAWL</th>
                   <th>CRAWL REPORT</th>
                   <th>COMMENTS</th>
                 </tr>
+                </thead>
+                <tbody>
                 @for(s <- collection.getSeeds()){
                   @if(s.getStatus == Status.INACTIVE) {
                   <tr>
@@ -225,16 +234,15 @@ $(document).ready(function(){
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td>
-                      <form action="@routes.SeedController.details(s.getId())">
                         <a href="" style="padding-right: 10px">2 ></a>
-                        <button class="btn btn-default" style="background-color:#999999;color:#fff;margin-bottom:5px;">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                      </form>
+                        <a class="pull-right" href="@routes.SeedController.details(s.getId())">
+                            <span class="glyphicon glyphicon-pencil inverse"></span>
+                        </a>
                     </td>
                   </tr>
                   }
                 }
+                </tbody>
               </table>
             </div>
             
