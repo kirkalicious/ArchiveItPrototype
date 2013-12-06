@@ -45,6 +45,7 @@ create table seed (
   url                       varchar(255),
   type                      varchar(8),
   frequency                 varchar(2),
+  privacy                   varchar(7),
   date_created              timestamp,
   date_last_crawled         timestamp,
   status                    varchar(1),
@@ -54,6 +55,7 @@ create table seed (
   collection_id             bigint,
   constraint ck_seed_type check (type in ('NEWS_RSS','ONE_PAGE','DEFAULT')),
   constraint ck_seed_frequency check (frequency in ('Q','S','BM','W','M','2D','D','A')),
+  constraint ck_seed_privacy check (privacy in ('PRIVATE','PUBLIC')),
   constraint ck_seed_status check (status in ('D','I','A')),
   constraint pk_seed primary key (id))
 ;

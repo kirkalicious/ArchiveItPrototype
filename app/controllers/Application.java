@@ -8,7 +8,7 @@ public class Application extends Controller {
 
     public static Result index() {
 
-		return ArchiveItCollections.list();
+		return CollectionController.list();
     }
 
 	public static Result deleteAlert(Long id) {

@@ -78,7 +78,7 @@ $(document).ready(function(){
             <div class="panel-body">
               <div class="row" style="background-color:#f0f0f0">
                 <div class="col-md-5" style="padding-left:0px">
-                  <form action="@routes.ArchiveItCollections.edit(collection.getId())" method="POST">
+                  <form action="@routes.CollectionController.edit(collection.getId())" method="POST">
                   <button class="btn btn-default" style="background-color:#f0f0f0; margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
                     <span class="glyphicon glyphicon-pencil" ></span>
                   </button>
@@ -140,7 +140,7 @@ $(document).ready(function(){
             <div class="panel-body">
               
               <div class="row" style="background-color:#f0f0f0;">
-              @helper.form(action = routes.ArchiveItCollections.addSeed(collection.getId)) {
+              @helper.form(action = routes.CollectionController.addSeed(collection.getId)) {
               	<div class="col-md-6">
               	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL")
                 </div>
@@ -152,7 +152,7 @@ $(document).ready(function(){
                 	<a href="">+ Add seeds in bulk</a>
                 </div>
               </div>
-              <table style="width: 100%">
+              <table class="table table-condensed" style="width: 100%">
                 <tr>
                   <th><input type="checkbox" id="active-seed-select"></th>
                   <th>URL</th>
@@ -169,7 +169,13 @@ $(document).ready(function(){
                     <td>@s.getFrequency().getValue()</td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
-                    <td><a href="">2 ></a></td>
+                    <td> <form action="@routes.SeedController.details(s.getId())">
+                          <a href="" style="padding-right: 10px">2 ></a>
+                          <button class="btn btn-default inverse" style="background-color:#999999;color:#fff;margin-bottom:5px;">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                          </button>
+                        </form>
+                    </td>
                   </tr>
                   }
                 }
@@ -177,11 +183,11 @@ $(document).ready(function(){
             </div>
             
             <div class="panel" id="collection-head-panel">
-            <div class="panel-heading">Inctive Seeds</div>
+            <div class="panel-heading">Inactive Seeds</div>
             <div class="panel-body">
               
               
-              <table style="width: 100%">
+              <table class="table table-condensed" style="width: 100%">
                 <tr>
                   <th><input type="checkbox" id="inactive-seed-select"></th>
                   <th>URL</th>
@@ -196,7 +202,14 @@ $(document).ready(function(){
                     <td><a href="http://@s.getUrl" target="_blank">@s.getUrl</a></td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
-                    <td><a href="">2 ></a></td>
+                    <td>
+                      <form action="@routes.SeedController.details(s.getId())">
+                        <a href="" style="padding-right: 10px">2 ></a>
+                        <button class="btn btn-default" style="background-color:#999999;color:#fff;margin-bottom:5px;">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                      </form>
+                    </td>
                   </tr>
                   }
                 }

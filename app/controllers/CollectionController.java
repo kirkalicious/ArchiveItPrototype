@@ -21,7 +21,7 @@ import views.html.collections.index;
 
 import com.avaje.ebean.Ebean;
 
-public class ArchiveItCollections extends Controller {
+public class CollectionController extends Controller {
 
 	private static final Form<ArchiveItCollection> collectionForm = Form
 			.form(ArchiveItCollection.class);

@@ -23,6 +23,7 @@ public class Seed extends Model {
 	private String url;
 	private SeedType type;
 	private CrawlFrequency frequency;
+	private PrivacySetting privacy;
 	private Date dateCreated;
 	private Date dateLastCrawled;
 	private Status status;
@@ -35,6 +36,9 @@ public class Seed extends Model {
 	@ManyToOne
 	private ArchiveItCollection collection;
 
+	public static Finder<Long, Seed> find = new Finder<Long, Seed>(
+			Long.class, Seed.class);
+	
 	public Seed(Long id, String url, SeedType t) {
 		this.id = id;
 		this.url = url;
@@ -143,5 +147,15 @@ public class Seed extends Model {
 
 	public void addComment(SeedComment c) {
 		comments.add(c);
+	}
+
+	public PrivacySetting getPrivacy()
+	{
+		return privacy;
+	}
+
+	public void setPrivacy(PrivacySetting privacy)
+	{
+		this.privacy = privacy;
 	}
 }
