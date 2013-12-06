@@ -27,6 +27,11 @@ $(document).ready(function(){
 			url: "/collections/" + $(this).attr("collectionId"),
 			data: {privacy: $(this).find("option:selected").val()}
 			})
+			.success(function(msg){
+			$(".bottom-right").notify({
+			    message: { text: 'Privacy Updated' }
+			  }).show();
+			})
 			.error(function( msg ) {
 				alert( "Unable to update privacy");
 			});
@@ -45,6 +50,11 @@ $(document).ready(function(){
 			};
 		console.log(request);
 		$.ajax(request)
+		    .success(function(msg){
+			$(".bottom-right").notify({
+			    message: { text: 'Status Updated' }
+			  }).show();
+			})
 			.error(function( msg ) {
 			alert( "Unable to update status");
 		});
@@ -63,6 +73,11 @@ $(document).ready(function(){
 			};
 		console.log(request);
 		$.ajax(request)
+		.success(function(msg){
+			$(".bottom-right").notify({
+			    message: { text: 'Frequency Updated' }
+			  }).show();
+			})
 			.error(function( msg ) {
 			alert( "Unable to update frequency");
 		});

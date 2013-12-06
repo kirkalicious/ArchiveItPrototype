@@ -9,6 +9,11 @@ $(document).ready(function(){
 			url: "/seeds/" + $(this).attr("seedId"),
 			data: {privacy: $(this).find("option:selected").val()}
 			})
+		    .success(function(msg){
+		    	$('.bottom-right').notify({
+		    	    message: { text: 'Privacy updated' }
+		    	  }).show();
+				 })
 			.error(function( msg ) {
 				alert( "Unable to update privacy");
 			});
@@ -21,6 +26,11 @@ $(document).ready(function(){
 			};
 		console.log(request);
 		$.ajax(request)
+		    .success(function(msg){
+		    	$('.bottom-right').notify({
+		    	    message: { text: 'Status updated' }
+		    	  }).show();
+				 })
 			.error(function( msg ) {
 			alert( "Unable to update status");
 		});
@@ -33,13 +43,17 @@ $(document).ready(function(){
 			};
 		console.log(request);
 		$.ajax(request)
+		    .success(function(msg){
+		    	$('.bottom-right').notify({
+		    	    message: { text: 'Frequency updated' }
+		    	  }).show();
+				 })
 			.error(function( msg ) {
 			alert( "Unable to update frequency: " + msg.responseText);
 		});
 	});
 });
 </script>
-
 <div class="row">
   <div class="col-md-12">
   	<a href="@routes.CollectionController.details(seed.getCollection().getId())">&lt; @seed.getCollection().getName() Collection</a>
@@ -103,5 +117,31 @@ $(document).ready(function(){
     </tr>
   </table>
   
+  </div>
+  <div class="panel" id="seed-metadata-panel">
+    <div class="panel-heading">Dublin Core Metadata</div>
+    <div class="panel-body">
+      <table class="table table condensed">
+      	<tr>
+      	  <th>NAME</th>
+      	  <th>CURRENT METADATA</th>
+      	  <th>ADD METADATA</th>
+      	</tr>
+       	  @for(name <- DublinCoreMetadata.values()) {
+      	    <tr>
+       	      <td>@name.toString()</td>
+       	      <td>
+       	      @for(metadata <- seed.getCollection().getMetadata()) {
+       	         @if(metadata.getKey() == name.getValue()) {
+       	           <p>@metadata.getValue()</p>
+       	         }
+       	      }
+       	      </td>
+       	      <td><input type="text" name=@name></td>
+       	    </tr>
+       	  }
+      	</tr>
+      </table>
+    </div> 
   </div>
 </div>
