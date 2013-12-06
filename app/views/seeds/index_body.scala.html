@@ -72,16 +72,24 @@ $(document).ready(function(){
         </form>
       </div>
       <div class="col-md-4" style="padding-left:0px">
-        <select id="seedPrivacy" seedId="@seed.getId">
-          @for(p <- PrivacySetting.values()) {
-            <option value="@p" @if(p == seed.getPrivacy()) {selected}>@p.getValue</option>
-          }
-        </select>
-        <select id="seedStatus" seedId="@seed.getId">
-          @for(s <- Status.values()) {
-            <option value="@s" @if(s == seed.getStatus()) {selected}>@s.getValue</option>
-          }
-        </select>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label class="sr-only" for="seedPrivacy">Privacy Setting</label>
+            <select id="seedPrivacy" class="form-control" seedId="@seed.getId">
+              @for(p <- PrivacySetting.values()) {
+                <option value="@p" @if(p == seed.getPrivacy()) {selected}>@p.getValue</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="seedStatus">Status Setting</label>
+            <select id="seedStatus" class="form-control" seedId="@seed.getId">
+              @for(s <- Status.values()) {
+                <option value="@s" @if(s == seed.getStatus()) {selected}>@s.getValue</option>
+              }
+            </select>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -99,11 +107,16 @@ $(document).ready(function(){
     </tr>
     <tr>
       <td>
-        <select id="seedFrequency" seedId="@seed.getId">
-          @for(s <- CrawlFrequency.values()) {
-            <option value="@s" @if(s == seed.getFrequency()) {selected}>@s.getValue</option>
-          }
-        </select>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label class="sr-only" for="seedFrequency">Crawl Frequency Setting</label>
+            <select id="seedFrequency" class="form-control" seedId="@seed.getId">
+              @for(s <- CrawlFrequency.values()) {
+                <option value="@s" @if(s == seed.getFrequency()) {selected}>@s.getValue</option>
+              }
+            </select>
+          </div>
+        </form>
       </td>
       <td>@if(seed.getVerified) {
       	    Verified

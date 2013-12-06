@@ -83,21 +83,6 @@ public class CollectionController extends Controller {
 
 	}
 
-	public static Result addSeed(Long collectionId) {
-		Form<Seed> seedForm = Form.form(Seed.class).bindFromRequest();
-		ArchiveItCollection c = ArchiveItCollection.find.byId(collectionId);
-		Seed seed = seedForm.get();
-		seed.setCollection(c);
-		seed.setDateCreated(new Date());
-		seed.setDateLastCrawled(new Date());
-		seed.setFrequency(CrawlFrequency.DAILY);
-		seed.setType(SeedType.DEFAULT);
-		seed.setStatus(models.Status.ACTIVE);
-		c.getSeeds().add(seed);
-		Ebean.save(c);
-		return details(collectionId);
-	}
-
 	@Transactional
 	public static Result activateCollection(Long id) {
 		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
@@ -171,6 +156,16 @@ public class CollectionController extends Controller {
 
 		return list();
 
+	}
+
+	public static Result addSeed(Long collectionId) {
+		Form<Seed> seedForm = Form.form(Seed.class).bindFromRequest();
+		ArchiveItCollection c = ArchiveItCollection.find.byId(collectionId);
+		Seed seed = new Seed(null, seedForm.get().getUrl(), SeedType.DEFAULT);
+		seed.setCollection(c);
+		c.getSeeds().add(seed);
+		Ebean.save(c);
+		return details(collectionId);
 	}
 
 }

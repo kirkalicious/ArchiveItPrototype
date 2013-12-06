@@ -104,16 +104,23 @@ $(document).ready(function(){
                   <p> created on @collection.getDateCreated().format("MM/dd/yy")</p>
                 </div>
                 <div class="col-md-4" style="padding-left:0px">
-                  <select id="collectionPrivacy" class="form-control" collectionId="@collection.getId">
-                  	@for(p <- PrivacySetting.values()) {
-                  	  <option value="@p" @if(p == collection.getPrivacy()) {selected}>@p.getValue</option>
-                  	}
-                  </select>
-                  <select id="collectionStatus" class="form-control" collectionId="@collection.getId">
-                  	@for(s <- Status.values()) {
-                  	  <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
-                  	}
-                  </select>
+                  <form class="form-inline" role="form">
+                    <div class="form-group">
+                      <label class="sr-only" for="collectionPrivacy">Privacy Setting</label>
+                      <select id="collectionPrivacy" class="form-control" collectionId="@collection.getId">
+                  	    @for(p <- PrivacySetting.values()) {
+                  	      <option value="@p" @if(p == collection.getPrivacy()) {selected}>@p.getValue</option>
+                  	    }
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <select id="collectionStatus" class="form-control" collectionId="@collection.getId">
+                  	    @for(s <- Status.values()) {
+                  	      <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
+                  	    }
+                      </select>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

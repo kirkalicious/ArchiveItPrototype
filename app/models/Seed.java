@@ -47,6 +47,7 @@ public class Seed extends Model {
 		dateCreated = new Date();
 		dateLastCrawled = new Date();
 		status = models.Status.ACTIVE;
+		privacy = PrivacySetting.PUBLIC;
 		verified = false;
 		loginUsername = "";
 		loginPassword = "";
