@@ -104,12 +104,12 @@ $(document).ready(function(){
                   <p> created on @collection.getDateCreated().format("MM/dd/yy")</p>
                 </div>
                 <div class="col-md-4" style="padding-left:0px">
-                  <select id="collectionPrivacy" collectionId="@collection.getId">
+                  <select id="collectionPrivacy" class="form-control" collectionId="@collection.getId">
                   	@for(p <- PrivacySetting.values()) {
                   	  <option value="@p" @if(p == collection.getPrivacy()) {selected}>@p.getValue</option>
                   	}
                   </select>
-                  <select id="collectionStatus" collectionId="@collection.getId">
+                  <select id="collectionStatus" class="form-control" collectionId="@collection.getId">
                   	@for(s <- Status.values()) {
                   	  <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
                   	}
@@ -139,7 +139,7 @@ $(document).ready(function(){
                   <th>NEXT SCHEDULED CRAWL</th>
                 </tr>
                 <tr>
-                  <td><select id="collectionFrequency" collectionId="@collection.getId">
+                  <td><select id="collectionFrequency" class="form-control" collectionId="@collection.getId">
                   	@for(s <- CrawlFrequency.values()) {
                   	  <option value="@s" @if(s == collection.getFrequency()) {selected}>@s.getValue</option>
                   	}
