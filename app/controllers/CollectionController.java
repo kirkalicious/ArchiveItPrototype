@@ -128,11 +128,21 @@ public class CollectionController extends Controller {
 				"Hispanic Literature", CrawlFrequency.DAILY,
 				ArchiveItCollectionTopic.ARTS, null, null);
 
-		Metadata data = new Metadata(null,
+		Metadata data1 = new Metadata(null,
 				DublinCoreMetadata.DESCRIPTION.getValue(),
 				"This is a description");
-		data.collection = collection;
-		collection.metadata.add(data);
+		data1.setCollection(collection);
+		collection.metadata.add(data1);
+
+		Metadata data2 = new Metadata(null,
+				DublinCoreMetadata.PUBLISHER.getValue(), "Random House");
+		data2.setCollection(collection);
+		collection.metadata.add(data2);
+
+		Metadata data3 = new Metadata(null,
+				DublinCoreMetadata.PUBLISHER.getValue(), "Random Bus");
+		data3.setCollection(collection);
+		collection.metadata.add(data3);
 
 		Seed seed1 = new Seed(null, "activeseed.com/", SeedType.DEFAULT);
 		SeedComment comment1 = new SeedComment("TEST: This seed is active",
