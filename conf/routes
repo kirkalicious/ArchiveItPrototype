@@ -20,6 +20,7 @@ POST	/collections/:id/seed		controllers.CollectionController.addSeed(id: Long)
 # Seeds
 GET		/seeds/:id					controllers.SeedController.details(id: Long)
 PUT     /seeds/:id					controllers.SeedController.update(id: Long)
+POST	/seeds/:id/comment			controllers.SeedController.addComment(id: Long)
 
 # Map Bootstrap images
 GET     /assets/fonts/glyphicons-halflings-regular.eot            controllers.Assets.at(path="/public", file="/fonts/glyphicons-halflings-regular.eot")

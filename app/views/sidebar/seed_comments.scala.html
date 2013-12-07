@@ -1,0 +1,25 @@
+@(seed: Seed, form: Form[SeedComment])
+
+@import helper.twitterBootstrap._
+
+    <div class="col-md-3" id="sidebar">
+      <div class="panel" id="sidebar-panel">
+        <div class="panel panel-default" id="sidebar-panel-help">
+          <div class="panel-heading">Comments(@seed.getComments().size())</div>
+          <div class="panel-body" style="background-color:#f0f0f0;margin-bottom:20px;">
+          @helper.form(action=routes.SeedController.addComment(seed.getId())) {
+            @helper.textarea(form("text"),'_label -> "")
+            <button type="submit" class="btn btn-primary">ADD</button>
+          }
+          @*
+          TODO: Add comment widget
+          *@
+          @for(comment <- seed.getComments()) {
+            <div style="border-style: solid;border-color: white;" >
+            <p>@comment.getText()</p>
+            <p>by <a href="">Username</a> <small>on @comment.getDateCreated().format("MM/dd/yy")</small></p>
+            </div>
+          }
+          </div>
+        </div>
+    </div>

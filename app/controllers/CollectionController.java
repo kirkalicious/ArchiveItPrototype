@@ -68,6 +68,13 @@ public class CollectionController extends Controller {
 			c.setStatus(cform.get().getStatus());
 			System.out
 					.println("New status setting: " + cform.get().getStatus());
+			if (c.getStatus() == models.Status.INACTIVE)
+			{
+				AlertMessage a = new AlertMessage(1L, "Collection "
+						+ c.getName() + " marked inactive.", "/collections/"
+						+ c.getId());
+				a.save();
+			}
 
 		}
 

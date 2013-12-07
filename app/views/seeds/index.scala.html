@@ -1,10 +1,10 @@
-@(title: String, seed: Seed)
+@(title: String, seed: Seed, commentForm: Form[SeedComment])
 
 @main(title) {
 	
   	@seeds.index_body(seed)
 	  	
 } {
-	@sidebar.main_sidebar()
+    @sidebar.seed_comments(seed: Seed, commentForm : Form[SeedComment])
 }
 

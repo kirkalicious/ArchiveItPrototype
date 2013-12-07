@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import play.data.Form;
 import play.db.ebean.Model;
 
 @Entity
@@ -21,6 +22,8 @@ public class SeedComment extends Model {
 
 	@ManyToOne
 	private Seed seed;
+
+	public static Form<SeedComment> commentForm = Form.form(SeedComment.class);
 
 	public SeedComment(String text, Seed seed) {
 		this.text = text;

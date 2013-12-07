@@ -20,12 +20,16 @@
 package controllers;
 
 
+import com.avaje.ebean.Ebean;
+
 import models.AlertMessage;
 import models.Seed;
+import models.SeedComment;
 import play.data.Form;
 import play.db.ebean.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import views.html.seeds.index;
 
 public class SeedController extends Controller
@@ -36,7 +40,7 @@ public class SeedController extends Controller
 	{
 		Seed seed = Seed.find.byId(id);
 		return ok(index.render(seed.getCollection().getName()
-				+ " Collection seed", seed));
+				+ " Collection seed", seed, SeedComment.commentForm));
 	}
 
 	public static Result update(Long id)
@@ -77,6 +81,20 @@ public class SeedController extends Controller
 
 		return ok();
 
+	}
+
+	public static Result addComment(Long seedId)
+	{
+		SeedComment c = SeedComment.commentForm.bindFromRequest().get();
+		Seed seed = Seed.find.byId(seedId);
+
+		System.out.println("Adding comment to seed " + seed.getId());
+		SeedComment comment = new SeedComment(c.getText(), seed);
+		seed.getComments().add(comment);
+
+		Ebean.update(seed);
+
+		return redirect(routes.SeedController.details(seed.getId()));
 	}
 
 }
