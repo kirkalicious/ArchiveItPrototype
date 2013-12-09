@@ -25,9 +25,9 @@ public class CollectionController extends Controller {
 
 	private static final Form<ArchiveItCollection> collectionForm = Form
 			.form(ArchiveItCollection.class);
-	private static final Form<Seed> seedForm = Form.form(Seed.class);
 
-	public static Result list() {
+	public static Result list()
+	{
 		List<ArchiveItCollection> active = ArchiveItCollection.find.where()
 				.eq("status", models.Status.ACTIVE).findList();
 		List<ArchiveItCollection> inactive = ArchiveItCollection.find.where()
@@ -38,6 +38,7 @@ public class CollectionController extends Controller {
 
 	public static Result details(Long id) {
 		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
+		Form<Seed> seedForm = Form.form(Seed.class);
 		return ok(detail.render(c.getName() + " Collection", c, seedForm));
 	}
 

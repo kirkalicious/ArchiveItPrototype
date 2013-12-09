@@ -23,8 +23,6 @@ public class SeedComment extends Model {
 	@ManyToOne
 	private Seed seed;
 
-	public static Form<SeedComment> commentForm = Form.form(SeedComment.class);
-
 	public SeedComment(String text, Seed seed) {
 		this.text = text;
 		this.seed = seed;

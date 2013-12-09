@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 @Entity
@@ -20,6 +21,7 @@ public class Seed extends Model {
 
 	@Id
 	private Long id;
+
 	private String url;
 	private SeedType type;
 	private CrawlFrequency frequency;
@@ -30,6 +32,7 @@ public class Seed extends Model {
 	private Boolean verified;
 	private String loginUsername;
 	private String loginPassword;
+
 	@OneToMany(mappedBy = "seed", cascade = CascadeType.ALL)
 	private List<SeedComment> comments;
 
@@ -38,6 +41,9 @@ public class Seed extends Model {
 
 	public static Finder<Long, Seed> find = new Finder<Long, Seed>(
 			Long.class, Seed.class);
+	
+	public Seed() {
+	}
 	
 	public Seed(Long id, String url, SeedType t) {
 		this.id = id;

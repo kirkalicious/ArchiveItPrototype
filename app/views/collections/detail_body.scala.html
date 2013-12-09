@@ -3,6 +3,7 @@
 @import helper.twitterBootstrap._
 <script>
 $(document).ready(function(){
+
     $("#active-seed-select").click(function(src) {
        $(".seed-active").each(function() {
          this.checked = src.target.checked;
@@ -17,12 +18,6 @@ $(document).ready(function(){
     
 	$("#collectionPrivacy").change(function() {
 		$.ajax({
-			beforeSend: function(){
-     			$('#loading-indicator').show();
-   			},
-   			complete: function(){
-     			$('#loading-indicator').hide();
-   			},
 			type: "PUT",
 			url: "/collections/" + $(this).attr("collectionId"),
 			data: {privacy: $(this).find("option:selected").val()}
@@ -38,12 +33,6 @@ $(document).ready(function(){
 	});
 	$("#collectionStatus").change(function() {
 		var request = {
-			beforeSend: function(){
-     			$('#loading-indicator').show();
-   			},
-   			complete: function(){
-     			$('#loading-indicator').hide();
-   			},
 			type: "PUT",
 			url: "/collections/" + $(this).attr("collectionId"),
 			data: {status: $(this).find("option:selected").val()}
@@ -61,12 +50,6 @@ $(document).ready(function(){
 	});
 	$("#collectionFrequency").change(function() {
 		var request = {
-			beforeSend: function(){
-     			$('#loading-indicator').show();
-   			},
-   			complete: function(){
-     			$('#loading-indicator').hide();
-   			},
 			type: "PUT",
 			url: "/collections/" + $(this).attr("collectionId"),
 			data: {frequency: $(this).find("option:selected").val()}
@@ -88,7 +71,6 @@ $(document).ready(function(){
 });
 
 </script>
-<img src="/images/loading.gif" id="loading-indicator" style="display:none" />
       <div class="row" id="main-collections-active">
         <div class="col-md-12">
           <div class="panel" id="collection-head-panel">
@@ -167,9 +149,10 @@ $(document).ready(function(){
             <div class="panel-body">
               
               <div class="row" style="background-color:#f0f0f0;">
-              @helper.form(action = routes.CollectionController.addSeed(collection.getId)) {
+              @helper.form(action = routes.SeedController.save(), 'id -> "newSeedForm") {
               	<div class="col-md-6">
-              	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL")
+              	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL", 'minlength->"4", 'type->"url", 'required->true)
+              	  <input type="hidden" name="collectionId" value='@collection.getId' >
                 </div>
                 <div class="col-md-2">
                   <input type="submit" class="btn btn-primary" value="ADD SEED">
@@ -200,7 +183,7 @@ $(document).ready(function(){
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td>
-                        <a href="" style="padding-right: 10px">2 ></a>
+                        <a href="" style="padding-right: 10px">@s.getComments().size() ></a>
                         <a class="pull-right" href="@routes.SeedController.details(s.getId())">
                             <span class="glyphicon glyphicon-pencil inverse"></span>
                         </a>
@@ -236,7 +219,7 @@ $(document).ready(function(){
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td>
-                        <a href="" style="padding-right: 10px">2 ></a>
+                        <a href="" style="padding-right: 10px">@s.getComments().size() ></a>
                         <a class="pull-right" href="@routes.SeedController.details(s.getId())">
                             <span class="glyphicon glyphicon-pencil inverse"></span>
                         </a>

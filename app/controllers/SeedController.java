@@ -20,17 +20,18 @@
 package controllers;
 
 
+
+import javax.persistence.metamodel.PluralAttribute.CollectionType;
+
 import com.avaje.ebean.Ebean;
 
-import models.AlertMessage;
+import models.ArchiveItCollection;
 import models.Seed;
 import models.SeedComment;
+import models.SeedType;
 import play.data.Form;
-import play.db.ebean.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Results;
-import views.html.seeds.index;
 
 public class SeedController extends Controller
 {
@@ -39,10 +40,49 @@ public class SeedController extends Controller
 	public static Result details(Long id)
 	{
 		Seed seed = Seed.find.byId(id);
-		return ok(index.render(seed.getCollection().getName()
-				+ " Collection seed", seed, SeedComment.commentForm));
+		Form<SeedComment> form = Form.form(SeedComment.class);
+		return ok(views.html.seeds.index.render(seed.getCollection().getName()
+				+ " Collection seed", seed, form));
 	}
 
+	public static Result save()
+	{
+		Form<Seed> form = Form.form(Seed.class).bindFromRequest();
+		
+		try {
+			if (form.hasErrors()) {
+				Long id = Long.parseLong(form.field("collectionId").value());
+				ArchiveItCollection c = ArchiveItCollection.find.byId(id);
+				return badRequest(views.html.collections.detail.render(
+						"Error in form", c, form));
+			}
+			play.data.Form.Field urlField = form.field("url");
+			play.data.Form.Field collectionIdField = form.field("collectionId");
+			Seed seed = new Seed(null, null, SeedType.DEFAULT);
+			if (collectionIdField == null || urlField == null)
+			{
+				return badRequest(views.html.collections.detail.render(
+						"Invalid form",
+						seed.getCollection(), form));
+			}
+
+			Long collectionId = Long.parseLong(collectionIdField.value());
+			ArchiveItCollection c = ArchiveItCollection.find.byId(collectionId);
+			c.getSeeds().add(seed);
+			seed.setCollection(c);
+			seed.setUrl(urlField.value());
+			Ebean.save(c);
+			return redirect("/collections/" + seed.getCollection().getId());
+
+		}
+		catch(Exception e) {
+			System.out.println("Error processing seed form: "
+					+ e.getLocalizedMessage());
+			return CollectionController.list();
+		}
+		
+	}
+	
 	public static Result update(Long id)
 	{
 		Seed s = Seed.find.byId(id);
@@ -85,7 +125,7 @@ public class SeedController extends Controller
 
 	public static Result addComment(Long seedId)
 	{
-		SeedComment c = SeedComment.commentForm.bindFromRequest().get();
+		SeedComment c = Form.form(SeedComment.class).bindFromRequest().get();
 		Seed seed = Seed.find.byId(seedId);
 
 		System.out.println("Adding comment to seed " + seed.getId());

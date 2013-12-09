@@ -8,7 +8,7 @@
           <div class="panel-heading">Comments(@seed.getComments().size())</div>
           <div class="panel-body" style="background-color:#f0f0f0;margin-bottom:20px;">
           @helper.form(action=routes.SeedController.addComment(seed.getId())) {
-            @helper.textarea(form("text"),'_label -> "")
+            @helper.textarea(form("text"),'_label -> "", 'required -> true)
             <button type="submit" class="btn btn-primary">ADD</button>
           }
           @*

@@ -15,9 +15,9 @@ GET		/collections/:id			controllers.CollectionController.details(id: Long)
 PUT     /collections/:id			controllers.CollectionController.update(id: Long)
 POST	/collections/:id/activate	controllers.CollectionController.activateCollection(id: Long)
 POST	/collections/:id/deactivate	controllers.CollectionController.deactivateCollection(id: Long)
-POST	/collections/:id/seed		controllers.CollectionController.addSeed(id: Long)
 
 # Seeds
+POST    /seeds/						controllers.SeedController.save()
 GET		/seeds/:id					controllers.SeedController.details(id: Long)
 PUT     /seeds/:id					controllers.SeedController.update(id: Long)
 POST	/seeds/:id/comment			controllers.SeedController.addComment(id: Long)
