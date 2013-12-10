@@ -9,6 +9,7 @@ DELETE	/alerts/:id					controllers.Application.deleteAlert(id: Long)
 
 # Collections
 GET		/collections				controllers.CollectionController.list()
+PUT		/collections				controllers.CollectionController.update2()
 POST	/collections/save			controllers.CollectionController.save()
 POST	/collections/:id/edit		controllers.CollectionController.edit(id: Long)
 GET		/collections/:id			controllers.CollectionController.details(id: Long)

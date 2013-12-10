@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import models.AlertMessage;
 import models.ArchiveItCollection;
@@ -12,6 +13,7 @@ import models.Metadata;
 import models.Seed;
 import models.SeedComment;
 import models.SeedType;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Transactional;
 import play.mvc.Controller;
@@ -47,6 +49,23 @@ public class CollectionController extends Controller {
 		return details(id);
 	}
 
+	public static Result update2()
+	{
+		DynamicForm request = Form.form().bindFromRequest();
+		System.out.println(request.toString());
+		Map<String, String> data = request.data();
+		String pk = request.get("pk");
+		System.out.println("pk: " + pk);
+		String name = request.get("value");
+		System.out.println("name: " + name);
+
+		ArchiveItCollection c = ArchiveItCollection.find.byId(Long
+				.parseLong(pk));
+		c.setName(name);
+		Ebean.save(c);
+		return ok();
+
+	}
 	public static Result update(Long id) {
 		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
 
