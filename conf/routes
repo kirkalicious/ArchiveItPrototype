@@ -18,7 +18,8 @@ POST	/collections/:id/activate	controllers.CollectionController.activateCollecti
 POST	/collections/:id/deactivate	controllers.CollectionController.deactivateCollection(id: Long)
 
 # Seeds
-POST    /seeds/						controllers.SeedController.save()
+POST    /seeds						controllers.SeedController.save()
+PUT		/seeds						controllers.SeedController.update2()
 GET		/seeds/:id					controllers.SeedController.details(id: Long)
 PUT     /seeds/:id					controllers.SeedController.update(id: Long)
 POST	/seeds/:id/comment			controllers.SeedController.addComment(id: Long)

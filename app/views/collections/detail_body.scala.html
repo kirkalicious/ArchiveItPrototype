@@ -7,6 +7,11 @@ $(document).ready(function(){
 	$.fn.editable.defaults.mode = 'inline';
 	$.fn.editable.defaults.ajaxOptions = {type: "PUT"};
 
+    $('#pencil').click(function(e) {
+        e.stopPropagation();
+        $('#collectionName').editable('toggle');
+    });
+    
 	$('#collectionName').editable({
         validate: function(value) {
            if($.trim(value) == '') return 'This field is required';
@@ -92,10 +97,10 @@ $(document).ready(function(){
             <div class="panel-body offwhite-bg">
               <div class="row">
                 <div class="col-md-8 inline">
-                  <button class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
+                  <button id="pencil" class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
                     <span class="glyphicon glyphicon-pencil" style="margin-top: 20px" ></span>
                   </button>
-                  <H2><a href="#" id="collectionName" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required">@collection.getName()</a>
+                  <H2><a href="#" id="collectionName" data-toggle="pencil" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required" style="border-bottom:none;">@collection.getName()</a>
                   <small>created on @collection.getDateCreated().format("MM/dd/yy")</small></h2>
                 </div>
                 <div class="col-md-4" style="padding-left:0px">
@@ -189,15 +194,13 @@ $(document).ready(function(){
                   @if(s.getStatus == Status.ACTIVE) {
                   <tr>
                     <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
-                    <td><a href="@s.getUrl" target="_blank">@s.getUrl</a></td>
+                    <td><a href="@routes.SeedController.details(s.getId())">@s.getUrl</a></td>
                     <td>@s.getFrequency().getValue()</td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
-                    <td><a href="">view ></a></td>
+                    <td><a href="">view &gt;</a></td>
                     <td>
                         <a href="" style="padding-right: 10px">@s.getComments().size() ></a>
-                        <a class="pull-right" href="@routes.SeedController.details(s.getId())">
-                            <span class="glyphicon glyphicon-pencil inverse"></span>
-                        </a>
+                        <span class="glyphicon glyphicon-pencil inverse pull-right"></span>
                     </td>
                   </tr>
                   }
@@ -226,14 +229,12 @@ $(document).ready(function(){
                   @if(s.getStatus == Status.INACTIVE) {
                   <tr>
                     <td><input type="checkbox" class="seed-inactive" id="@s.getId"></td>
-                    <td><a href="http://@s.getUrl" target="_blank">@s.getUrl</a></td>
+                    <td><a href="@routes.SeedController.details(s.getId())">@s.getUrl</a></td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td>
                         <a href="" style="padding-right: 10px">@s.getComments().size() ></a>
-                        <a class="pull-right" href="@routes.SeedController.details(s.getId())">
-                            <span class="glyphicon glyphicon-pencil inverse"></span>
-                        </a>
+                        <span class="glyphicon glyphicon-pencil inverse pull-right"></span>
                     </td>
                   </tr>
                   }
