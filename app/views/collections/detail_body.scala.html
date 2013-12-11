@@ -100,7 +100,7 @@ $(document).ready(function(){
                   <button id="pencil" class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
                     <span class="glyphicon glyphicon-pencil" style="margin-top: 20px" ></span>
                   </button>
-                  <H2><a href="#" id="collectionName" data-toggle="pencil" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required" style="border-bottom:none;">@collection.getName()</a>
+                  <H2><span  id="collectionName" data-toggle="pencil" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required" style="border-bottom:none;">@collection.getName()</span>
                   <small>created on @collection.getDateCreated().format("MM/dd/yy")</small></h2>
                 </div>
                 <div class="col-md-4" style="padding-left:0px">
