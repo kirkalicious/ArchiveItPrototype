@@ -56,11 +56,11 @@
                 <span class="glyphicon glyphicon-plus"></span> CREATE NEW COLLECTION
               </button>
               </form>
-              <table class="table table-condensed">
+              <table class="table table-condensed three-col">
                 <tr>
-                  <th>NAME</th>
-                  <th>MOST RECENT CRAWL</th>
-                  <th>NEXT SCHEDULED CRAWL</th>
+                  <th class="col-1">NAME</th>
+                  <th class="col-2">MOST RECENT CRAWL</th>
+                  <th class="col-3">NEXT SCHEDULED CRAWL</th>
                 </tr>
                 @for(collection <- activeCollections) {
                 <tr>
@@ -75,10 +75,10 @@
           <div class="panel" id="colections-inactive-panel">
             <div class="panel-heading">Inctive Collections</div>
             <div class="panel-body">
-              <table class="table table-condensed">
+              <table class="table table-condensed three-col">
                 <tr>
-                  <th>NAME</th>
-                  <th>LAST CRAWL</th>
+                  <th class="col-1">NAME</th>
+                  <th class="col-2">LAST CRAWL</th>
                   <th>&nbsp;</th>
                 </tr>
                 @for(collection <- inactiveCollections) {
