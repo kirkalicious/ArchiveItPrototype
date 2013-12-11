@@ -156,11 +156,11 @@ public class CollectionController extends Controller {
 		data3.setCollection(collection);
 		collection.metadata.add(data3);
 
-		Seed seed1 = new Seed(null, "activeseed.com/", SeedType.DEFAULT);
+		Seed seed1 = new Seed(null, "http://activeseed.com", SeedType.DEFAULT);
 		SeedComment comment1 = new SeedComment("TEST: This seed is active",
 				seed1);
 
-		Seed seed2 = new Seed(null, "inactiveseed.com/", SeedType.DEFAULT);
+		Seed seed2 = new Seed(null, "http://inactiveseed.com", SeedType.DEFAULT);
 		seed2.setStatus(models.Status.INACTIVE);
 		SeedComment comment2 = new SeedComment("TEST: This seed is inactive",
 				seed2);

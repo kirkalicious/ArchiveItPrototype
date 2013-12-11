@@ -92,7 +92,7 @@ $(document).ready(function(){
             <div class="panel-body offwhite-bg">
               <div class="row">
                 <div class="col-md-8 inline">
-                  <button class="btn btn-default" style="background-color:#f0f0f0; margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
+                  <button class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
                     <span class="glyphicon glyphicon-pencil" style="margin-top: 20px" ></span>
                   </button>
                   <H2><a href="#" id="collectionName" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required">@collection.getName()</a>
@@ -159,7 +159,7 @@ $(document).ready(function(){
             <div class="panel-heading">Active Seeds</div>
             <div class="panel-body">
               
-              <div class="row" style="margin:0 0 20px;background-color:#f0f0f0;">
+              <div class="row offwhite-bg" style="margin:0 0 20px;">
               @helper.form(action = routes.SeedController.save(), 'id -> "newSeedForm") {
               	<div class="col-md-6">
               	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL", 'minlength->"4", 'type->"url", 'required->true)

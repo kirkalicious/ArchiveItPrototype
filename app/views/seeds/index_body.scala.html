@@ -61,19 +61,19 @@ $(document).ready(function(){
 </div>
 <div class="panel" id="seed-detail-panel">
   <div class="panel-heading">Seed Detail</div>
-  <div class="panel-body" style="background-color:#f0f0f0">
+  <div class="panel-body offwhite-bg">
     <div class="row" >
       <div class="col-md-8" >
         <form action="" method="POST">
-          <button class="btn btn-default" style="background-color:#f0f0f0; margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
+          <button class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
             <span class="glyphicon glyphicon-pencil" ></span>
           </button>
           <h2>@seed.getUrl() <small>created on @seed.getDateCreated().format("MM/dd/yy")</small></h2>
         </form>
       </div>
       <div class="col-md-4" style="padding-left:0px">
-        <form class="form-inline" role="form" id="settingsForm">
-          <div class="form-group">
+        <form class="form-inline" role="form" id="settingsForm" style="margin-top: 15px;">
+          <div class="form-group" style="padding: 14px 10px;">
             <label class="sr-only" for="seedPrivacy">Privacy Setting</label>
             <select id="seedPrivacy" class="form-control" seedId="@seed.getId">
               @for(p <- PrivacySetting.values()) {
@@ -81,7 +81,7 @@ $(document).ready(function(){
               }
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="padding: 14px 10px;">
             <label class="sr-only" for="seedStatus">Status Setting</label>
             <select id="seedStatus" class="form-control" seedId="@seed.getId">
               @for(s <- Status.values()) {
