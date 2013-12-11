@@ -83,7 +83,8 @@ table.dataTable {
 
 #sidebar {
 	width: 292px;
-	padding: 0;
+	padding-right: 0;
+	padding-left: 25px
 }
   hr {
      margin:1px;
@@ -137,3 +138,8 @@ table.dataTable {
   .alert {
      margin-bottom:5px;
   }
+  
+.inline {
+  display: inline-block;
+  vertical-align: baseline;
+}
