@@ -85,8 +85,9 @@
                 <tr>
                   <td><p><a href="/collections/@collection.getId()">@collection.getName()</a></p></td>
                   <td><p>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
-                  <td><form action="@routes.CollectionController.activateCollection(collection.getId())" method="POST">
+                  <td><form action="@routes.CollectionController.update(collection)" method="POST">
                         <input class="btn btn-default" type="submit" value="Activate Collection">
+                        <input type="hidden" name="status" value="@Status.ACTIVE">
                       </form>
                       </p></td>
                 </tr>

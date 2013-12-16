@@ -38,7 +38,7 @@ $(document).ready(function(){
 	$("#collectionPrivacy").change(function() {
 		$.ajax({
 			type: "PUT",
-			url: "/collections/" + $(this).attr("collectionId"),
+			url: "/collections/@collection.getId()",
 			data: {privacy: $(this).find("option:selected").val()}
 			})
 			.success(function(msg){
@@ -53,7 +53,7 @@ $(document).ready(function(){
 	$("#collectionStatus").change(function() {
 		var request = {
 			type: "PUT",
-			url: "/collections/" + $(this).attr("collectionId"),
+			url: "/collections/@collection.getId()",
 			data: {status: $(this).find("option:selected").val()}
 			};
 		console.log(request);
@@ -70,7 +70,7 @@ $(document).ready(function(){
 	$("#collectionFrequency").change(function() {
 		var request = {
 			type: "PUT",
-			url: "/collections/" + $(this).attr("collectionId"),
+			url: "/collections/@collection.getId()",
 			data: {frequency: $(this).find("option:selected").val()}
 			};
 		console.log(request);
@@ -100,7 +100,7 @@ $(document).ready(function(){
                   <button id="pencil" class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
                     <span class="glyphicon glyphicon-pencil" style="margin-top: 20px" ></span>
                   </button>
-                  <H2><span  id="collectionName" data-toggle="pencil" data-type="text" data-pk="@collection.getId" data-url="/collections" data-title="Rename collection" data-placeholder="Required" style="border-bottom:none;">@collection.getName()</span>
+                  <H2><span  id="collectionName" data-name="name" data-toggle="pencil" data-type="text" data-pk="@collection.getId" data-url="/collections/@collection.getId" data-title="Rename collection" data-placeholder="Required" style="border-bottom:none;">@collection.getName()</span>
                   <small>created on @collection.getDateCreated().format("MM/dd/yy")</small></h2>
                 </div>
                 <div class="col-md-4" style="padding-left:0px">
@@ -108,14 +108,14 @@ $(document).ready(function(){
                   <form class="form-inline" role="form">
                     <div class="form-group" style="padding: 14px 10px;">
                       <label class="sr-only" for="collectionPrivacy">Privacy Setting</label>
-                      <select id="collectionPrivacy" class="form-control" collectionId="@collection.getId">
+                      <select id="collectionPrivacy" class="form-control" >
                   	    @for(p <- PrivacySetting.values()) {
                   	      <option value="@p" @if(p == collection.getPrivacy()) {selected}>@p.getValue</option>
                   	    }
                       </select>
                     </div>
                     <div class="form-group">
-                      <select id="collectionStatus" class="form-control" collectionId="@collection.getId">
+                      <select id="collectionStatus" class="form-control">
                   	    @for(s <- Status.values()) {
                   	      <option value="@s" @if(s == collection.getStatus()) {selected}>@s.getValue</option>
                   	    }
@@ -194,7 +194,7 @@ $(document).ready(function(){
                   @if(s.getStatus == Status.ACTIVE) {
                   <tr>
                     <td><input type="checkbox" class="seed-active" id="@s.getId"></td>
-                    <td><a href="@routes.SeedController.details(s.getId())">@s.getUrl</a></td>
+                    <td><a href="@routes.SeedController.details(s)">@s.getUrl</a></td>
                     <td>@s.getFrequency().getValue()</td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view &gt;</a></td>
@@ -229,7 +229,7 @@ $(document).ready(function(){
                   @if(s.getStatus == Status.INACTIVE) {
                   <tr>
                     <td><input type="checkbox" class="seed-inactive" id="@s.getId"></td>
-                    <td><a href="@routes.SeedController.details(s.getId())">@s.getUrl</a></td>
+                    <td><a href="@routes.SeedController.details(s)">@s.getUrl</a></td>
                     <td>@s.getDateLastCrawled.format("MM/dd/yyyy 'at' hh:mm a zzz")</td>
                     <td><a href="">view ></a></td>
                     <td>

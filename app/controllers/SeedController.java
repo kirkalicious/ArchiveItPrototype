@@ -21,12 +21,6 @@ package controllers;
 
 
 
-import java.util.Map;
-
-import javax.persistence.metamodel.PluralAttribute.CollectionType;
-
-import com.avaje.ebean.Ebean;
-
 import models.ArchiveItCollection;
 import models.Seed;
 import models.SeedComment;
@@ -36,13 +30,13 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.avaje.ebean.Ebean;
+
 public class SeedController extends Controller
 {
-	private static Form<Seed> form = Form.form(Seed.class);
 	
-	public static Result details(Long id)
+	public static Result details(Seed seed)
 	{
-		Seed seed = Seed.find.byId(id);
 		Form<SeedComment> form = Form.form(SeedComment.class);
 		return ok(views.html.seeds.index.render(seed.getCollection().getName()
 				+ " Collection seed", seed, form));
@@ -86,66 +80,74 @@ public class SeedController extends Controller
 		
 	}
 	
-	public static Result update(Long id)
+	public static Result update(Seed seed)
 	{
-		Seed s = Seed.find.byId(id);
 
-		Form<Seed> sform = form.bindFromRequest();
+		DynamicForm requestForm = Form.form().bindFromRequest();
+
+		// In client, use X-Editable for in-line editing of 'name'
+		// Has own format for sending updates.
+		if (requestForm.get("pk") != null) {
+			String name = requestForm.get("value");
+			if (name == null || "".equals(name)) {
+				flash("Name cannot be empty");
+				return badRequest();
+			}
+			seed.setUrl(name);
+			seed.update();
+			return ok();
+		}
+
+		Form<Seed> sform = Form.form(Seed.class).bindFromRequest();
+
 		if (sform.hasErrors())
 		{
 			System.out.println("BAD REQUEST");
+			System.out.println(sform.errorsAsJson().toString());
 			return badRequest();
 		}
 		System.out.println(sform.toString());
 
+		// Update privacy settings
 		if (sform.get().getPrivacy() != null)
 		{
-			s.setPrivacy(sform.get().getPrivacy());
+			seed.setPrivacy(sform.get().getPrivacy());
 			System.out.println("New privacy setting: "
 					+ sform.get().getPrivacy());
 		}
 
+		// Update status setting
 		if (sform.get().getStatus() != null)
 		{
-			s.setStatus(sform.get().getStatus());
+			seed.setStatus(sform.get().getStatus());
 			System.out
 					.println("New status setting: " + sform.get().getStatus());
 
 		}
 
+		// Update crawl frequency
 		if (sform.get().getFrequency() != null)
 		{
-			s.setFrequency(sform.get().getFrequency());
+			seed.setFrequency(sform.get().getFrequency());
 			System.out.println("New frequency setting: "
 					+ sform.get().getFrequency());
 
 		}
-		s.update();
+		seed.update();
 
 		return ok();
 
 	}
 
-	public static Result update2()
-	{
-		DynamicForm request = Form.form().bindFromRequest();
-		System.out.println(request.toString());
-		Map<String, String> data = request.data();
-		String pk = request.get("pk");
-		System.out.println("pk: " + pk);
-		String name = request.get("value");
-		System.out.println("name: " + name);
-
-		Seed s = Seed.find.byId(Long.parseLong(pk));
-		s.setUrl(name);
-		Ebean.save(s);
-		return ok();
-
-	}
-	public static Result addComment(Long seedId)
+	/**
+	 * Add a comment to a seed
+	 * 
+	 * @param seed
+	 * @return
+	 */
+	public static Result addComment(Seed seed)
 	{
 		SeedComment c = Form.form(SeedComment.class).bindFromRequest().get();
-		Seed seed = Seed.find.byId(seedId);
 
 		System.out.println("Adding comment to seed " + seed.getId());
 		SeedComment comment = new SeedComment(c.getText(), seed);
@@ -153,7 +155,7 @@ public class SeedController extends Controller
 
 		Ebean.update(seed);
 
-		return redirect(routes.SeedController.details(seed.getId()));
+		return redirect(routes.SeedController.details(seed));
 	}
 
 }

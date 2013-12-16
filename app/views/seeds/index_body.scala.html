@@ -17,7 +17,7 @@ $(document).ready(function(){
 		 pk: "@seed.getId",
 		 name: 'seedUrl',
 		 toggle: "#pencil",
-		 url: '/seeds',
+		 url: '/seeds/@seed.getId()',
 		 title: 'Change URL',
 		 placeholder: 'Required',
 			 
@@ -86,7 +86,7 @@ $(document).ready(function(){
 </script>
 <div class="row">
   <div class="col-md-12">
-  	<a href="@routes.CollectionController.details(seed.getCollection().getId())">&lt; @seed.getCollection().getName() Collection</a>
+  	<a href="@routes.CollectionController.details(seed.getCollection())">&lt; @seed.getCollection().getName() Collection</a>
   </div>
 </div>
 <div class="panel" id="seed-detail-panel">
