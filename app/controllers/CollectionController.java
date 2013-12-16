@@ -1,8 +1,6 @@
 package controllers;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import models.AlertMessage;
 import models.ArchiveItCollection;
@@ -15,7 +13,6 @@ import models.SeedComment;
 import models.SeedType;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.db.ebean.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.collections.detail;
@@ -25,9 +22,11 @@ import com.avaje.ebean.Ebean;
 
 public class CollectionController extends Controller {
 
-	private static final Form<ArchiveItCollection> collectionForm = Form
-			.form(ArchiveItCollection.class);
-
+	/**
+	 * List of all collections
+	 * 
+	 * @return
+	 */
 	public static Result list()
 	{
 		List<ArchiveItCollection> active = ArchiveItCollection.find.where()
@@ -38,52 +37,64 @@ public class CollectionController extends Controller {
 		return ok(index.render("ArchiveIt Home", alerts, active, inactive));
 	}
 
-	public static Result details(Long id) {
-		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
+	/**
+	 * Show details of a single collection
+	 * 
+	 * Pass seed form for adding seeds
+	 * 
+	 * @param collection
+	 * @return
+	 */
+	public static Result details(ArchiveItCollection collection) {
 		Form<Seed> seedForm = Form.form(Seed.class);
-		return ok(detail.render(c.getName() + " Collection", c, seedForm));
+		return ok(detail.render(collection.getName() + " Collection",
+				collection, seedForm));
 	}
 
-	public static Result edit(Long id) {
+	/**
+	 * Update fields in a collection
+	 * 
+	 * @param c
+	 *            - the collection to update
+	 * @return
+	 */
+	public static Result update(ArchiveItCollection c) {
 
-		return details(id);
-	}
+		DynamicForm requestForm = Form.form().bindFromRequest();
 
-	public static Result update2()
-	{
-		DynamicForm request = Form.form().bindFromRequest();
-		System.out.println(request.toString());
-		Map<String, String> data = request.data();
-		String pk = request.get("pk");
-		System.out.println("pk: " + pk);
-		String name = request.get("value");
-		System.out.println("name: " + name);
+		// In client, use X-Editable for in-line editing of 'name'
+		// Has own format for sending updates.
+		if (requestForm.get("pk") != null) {
+			String name = requestForm.get("value");
+			if (name == null || "".equals(name)) {
+				flash("Name cannot be empty");
+				return badRequest();
+			}
+			c.setName(name);
+			c.update();
+			return ok();
+		}
 
-		ArchiveItCollection c = ArchiveItCollection.find.byId(Long
-				.parseLong(pk));
-		c.setName(name);
-		Ebean.save(c);
-		return ok();
-
-	}
-	public static Result update(Long id) {
-		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
-
+		// Form with values from the client
 		Form<ArchiveItCollection> cform = Form.form(
 				ArchiveItCollection.class)
 				.bindFromRequest();
+
 		if (cform.hasErrors()) {
 			System.out.println("BAD REQUEST");
+			System.out.println(cform.errorsAsJson().toString());
 			return badRequest();
 		}
-		System.out.println(cform.toString());
 
+		// Update privacy settings
 		if (cform.get().getPrivacy() != null) {
 			c.setPrivacy(cform.get().getPrivacy());
 			System.out.println("New privacy setting: "
 					+ cform.get().getPrivacy());
 		}
 
+		// Update Status
+		// If set to INACTIVE, create an Alert
 		if (cform.get().getStatus() != null) {
 			c.setStatus(cform.get().getStatus());
 			System.out
@@ -98,42 +109,29 @@ public class CollectionController extends Controller {
 
 		}
 
+		// Update Frequency
+		// TODO: Remove if this is not a Collection-level attribute
 		if (cform.get().getFrequency() != null) {
 			c.setFrequency(cform.get().getFrequency());
 			System.out.println("New frequency setting: "
 					+ cform.get().getFrequency());
 
 		}
+
+		// Update the object in the database
 		c.update();
 
 		return ok();
 
 	}
 
-	@Transactional
-	public static Result activateCollection(Long id) {
-		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
-		c.setStatus(models.Status.ACTIVE);
-		c.update();
-		return list();
-	}
-
-	@Transactional
-	public static Result deactivateCollection(Long id) {
-		ArchiveItCollection c = ArchiveItCollection.find.byId(id);
-		c.setStatus(models.Status.INACTIVE);
-		c.update();
-		AlertMessage a = new AlertMessage(1L, "Collection " + c.getName()
-				+ " marked inactive.", "/collections/" + c.getId());
-		a.save();
-		return list();
-	}
-
-	static List<ArchiveItCollection> getAllCollections() {
-		return ArchiveItCollection.find.all();
-		// return Ebean.find(ArchiveItCollection.class).findList();
-	}
-
+	/**
+	 * Create a collection with set parameters.
+	 * 
+	 * TODO: Provide form for user to specify all parameters
+	 * 
+	 * @return
+	 */
 	public static Result save() {
 
 		ArchiveItCollection collection = new ArchiveItCollection(null,
@@ -185,6 +183,12 @@ public class CollectionController extends Controller {
 
 	}
 
+	/**
+	 * Add a seed to the collection
+	 * 
+	 * @param collectionId
+	 * @return
+	 */
 	public static Result addSeed(Long collectionId) {
 		Form<Seed> seedForm = Form.form(Seed.class).bindFromRequest();
 		ArchiveItCollection c = ArchiveItCollection.find.byId(collectionId);
@@ -192,7 +196,7 @@ public class CollectionController extends Controller {
 		seed.setCollection(c);
 		c.getSeeds().add(seed);
 		Ebean.save(c);
-		return details(collectionId);
+		return details(c);
 	}
 
 }

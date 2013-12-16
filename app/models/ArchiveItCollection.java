@@ -12,9 +12,11 @@ import javax.persistence.OneToMany;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import play.db.ebean.Model;
+import play.mvc.PathBindable;
 
 @Entity
-public class ArchiveItCollection extends Model {
+public class ArchiveItCollection extends Model implements
+		PathBindable<ArchiveItCollection> {
 
 	private static final long serialVersionUID = 6351358612700080365L;
 
@@ -159,5 +161,21 @@ public class ArchiveItCollection extends Model {
 
 	public void setPrivacy(PrivacySetting privacy) {
 		this.privacy = privacy;
+	}
+
+	@Override
+	public String javascriptUnbind() {
+		return this.id.toString();
+	}
+
+	@Override
+	public String unbind(String arg0) {
+		return this.id.toString();
+	}
+
+	@Override
+	public ArchiveItCollection bind(String key, String value) {
+		Long id = Long.parseLong(value);
+		return find.byId(id);
 	}
 }

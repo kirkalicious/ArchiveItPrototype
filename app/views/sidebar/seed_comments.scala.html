@@ -7,7 +7,7 @@
         <div class="panel panel-default" id="sidebar-panel-help">
           <div class="panel-heading">Comments(@seed.getComments().size())</div>
           <div class="panel-body offwhite-bg" style="margin-bottom:20px;">
-          @helper.form(action=routes.SeedController.addComment(seed.getId())) {
+          @helper.form(action=routes.SeedController.addComment(seed)) {
             @helper.textarea(form("text"),'_label -> "", 'required -> true, 'style -> "margin-left: 10px")
             <button type="submit" style="margin-bottom:10px;margin-left:10px;"class="btn btn-primary">ADD</button>
           }

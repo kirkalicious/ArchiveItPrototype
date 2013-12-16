@@ -11,11 +11,11 @@ import javax.persistence.OneToMany;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import play.mvc.PathBindable;
 
 @Entity
-public class Seed extends Model {
+public class Seed extends Model implements PathBindable<Seed> {
 
 	private static final long serialVersionUID = 38853523136852527L;
 
@@ -164,5 +164,21 @@ public class Seed extends Model {
 	public void setPrivacy(PrivacySetting privacy)
 	{
 		this.privacy = privacy;
+	}
+
+	@Override
+	public Seed bind(String key, String value) {
+		Long id = Long.parseLong(value);
+		return find.byId(id);
+	}
+
+	@Override
+	public String javascriptUnbind() {
+		return this.id.toString();
+	}
+
+	@Override
+	public String unbind(String arg0) {
+		return this.id.toString();
 	}
 }
