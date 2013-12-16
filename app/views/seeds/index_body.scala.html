@@ -82,6 +82,30 @@ $(document).ready(function(){
 			alert( "Unable to update frequency: " + msg.responseText);
 		});
 	});
+	
+	$('.metadata').tagit({
+      beforeTagAdded: function(event, ui) {
+      $.ajax({
+			type: "POST",
+			url: "/seeds/" + @seed.getId() + "/meta",
+			data: {key: event.target.id,
+			       value: ui.tagLabel
+			       }
+			})
+		    .success(function(msg){
+		    	$('.bottom-right').notify({
+		    	    message: { text: 'Tag Added' }
+		    	  }).show();
+				 })
+			.error(function( msg ) {
+				alert( "Unable to add tag");
+			});
+        // do something special
+        console.log(event.target.id);
+        console.log(ui.tagLabel);
+      },
+      allowSpaces: true
+	});
 });
 </script>
 <div class="row">
@@ -164,21 +188,25 @@ $(document).ready(function(){
     <div class="panel-body">
       <table class="table table condensed">
       	<tr>
-      	  <th>NAME</th>
-      	  <th>CURRENT METADATA</th>
-      	  <th>ADD METADATA</th>
+      	  <th width="100px">NAME</th>
+      	  <th>METADATA</th>
       	</tr>
        	  @for(name <- DublinCoreMetadata.values()) {
       	    <tr>
        	      <td>@name.toString()</td>
        	      <td>
-       	      @for(metadata <- seed.getCollection().getMetadata()) {
-       	         @if(metadata.getKey() == name.getValue()) {
-       	           <p>@metadata.getValue()</p>
-       	         }
-       	      }
+       	      <form>
+       	        <p></p>
+                <ul id="@name" class="metadata">
+                @for(metadata <- seed.getSeedMetadata()) {
+       	          @if(metadata.getKey() == name.getValue()) {
+       	            <li>@metadata.getValue()</li>
+       	          }
+       	        }
+                </ul>
+        	  </form>
+       	      
        	      </td>
-       	      <td><input type="text" name=@name></td>
        	    </tr>
        	  }
       	</tr>

@@ -24,6 +24,7 @@ package controllers;
 import models.ArchiveItCollection;
 import models.Seed;
 import models.SeedComment;
+import models.SeedMetadata;
 import models.SeedType;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -158,4 +159,21 @@ public class SeedController extends Controller
 		return redirect(routes.SeedController.details(seed));
 	}
 
+	public static Result addMetadata(Seed seed) {
+		DynamicForm form = Form.form().bindFromRequest();
+		String key = form.get("key");
+		String value = form.get("value");
+		SeedMetadata meta = new SeedMetadata(key, value);
+		meta.setSeed(seed);
+		seed.getSeedMetadata().add(meta);
+		Ebean.save(seed);
+		return ok();
+	}
+
+	public static Result deleteMetadata(Seed seed, SeedMetadata meta) {
+		seed.getSeedMetadata().remove(meta);
+		meta.delete();
+		Ebean.save(seed);
+		return ok();
+	}
 }

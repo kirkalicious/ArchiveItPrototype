@@ -34,12 +34,34 @@
 .navbar-nav.nav-justified a {
 	padding:0;
 	margin:0;
-	border-right-color:white;
 }
 
 .navbar-inverse {
 	background-color:#666666;
 	border:0px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #fff;
+}
+a {
+	text-decoration: underline;
+	color: #000;
+}
+
+a.plain {
+	text-decoration: none;
+}
+
+a.inverse {
+	color: #fff;
+}
+
+.divider-vertical {
+    height: 25px;
+    width:2px;
+    margin: 0;
+    border-right: 1px solid #FFF;
 }
 
 th,

@@ -3,7 +3,9 @@ $.extend( true, $.fn.dataTable.defaults, {
 	"sDom": "<'row'<'col-xs-6'l><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
 	"sPaginationType": "bootstrap",
 	"oLanguage": {
-		"sLengthMenu": "_MENU_ records per page"
+		"sLengthMenu": "_MENU_ records per page",
+		"sInfo": "_START_ to _END_ of _TOTAL_",
+
 	}
 } );
 
@@ -49,8 +51,8 @@ $.extend( $.fn.dataTableExt.oPagination, {
 
 			$(nPaging).append(
 				'<ul class="pagination">'+
-					'<li class="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
-					'<li class="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
+					'<li class="prev disabled"><a href="#">&lt;</a></li>'+
+					'<li class="next disabled"><a href="#">&gt; </a></li>'+
 				'</ul>'
 			);
 			var els = $('a', nPaging);

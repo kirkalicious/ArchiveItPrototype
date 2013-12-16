@@ -2,26 +2,21 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import play.db.ebean.Model;
 
 @Entity
-public class Metadata extends Model {
+public abstract class Metadata extends Model {
 
 	private static final long serialVersionUID = -6949531195400134288L;
 	@Id
-	private Long id;
-	private String key;
-	private String value;
+	protected Long id;
+	protected String key;
+	protected String value;
 
-	@ManyToOne
-	private ArchiveItCollection collection;
-
-	public Metadata(Long id, String key, String value) {
-		this.id = id;
+	public Metadata(String key, String value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -46,16 +41,6 @@ public class Metadata extends Model {
 		this.value = value;
 	}
 
-	public ArchiveItCollection getCollection()
-	{
-		return collection;
-	}
-
-	public void setCollection(ArchiveItCollection collection)
-	{
-		this.collection = collection;
-	}
-
 	public static long getSerialversionuid()
 	{
 		return serialVersionUID;
@@ -70,4 +55,5 @@ public class Metadata extends Model {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
+
 }

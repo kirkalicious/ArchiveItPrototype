@@ -32,11 +32,18 @@ create table archive_it_collection (
   constraint pk_archive_it_collection primary key (id))
 ;
 
-create table metadata (
+create table collection_metadata (
   id                        bigint not null,
   key                       varchar(255),
   value                     varchar(255),
   collection_id             bigint,
+  constraint pk_collection_metadata primary key (id))
+;
+
+create table metadata (
+  id                        bigint not null,
+  key                       varchar(255),
+  value                     varchar(255),
   constraint pk_metadata primary key (id))
 ;
 
@@ -70,9 +77,19 @@ create table seed_comment (
   constraint pk_seed_comment primary key (id))
 ;
 
+create table seed_metadata (
+  id                        bigint not null,
+  key                       varchar(255),
+  value                     varchar(255),
+  seed_id                   bigint,
+  constraint pk_seed_metadata primary key (id))
+;
+
 create sequence alert_message_seq;
 
 create sequence archive_it_collection_seq;
+
+create sequence collection_metadata_seq;
 
 create sequence metadata_seq;
 
@@ -80,12 +97,16 @@ create sequence seed_seq;
 
 create sequence seed_comment_seq;
 
-alter table metadata add constraint fk_metadata_collection_1 foreign key (collection_id) references archive_it_collection (id) on delete restrict on update restrict;
-create index ix_metadata_collection_1 on metadata (collection_id);
+create sequence seed_metadata_seq;
+
+alter table collection_metadata add constraint fk_collection_metadata_collect_1 foreign key (collection_id) references archive_it_collection (id) on delete restrict on update restrict;
+create index ix_collection_metadata_collect_1 on collection_metadata (collection_id);
 alter table seed add constraint fk_seed_collection_2 foreign key (collection_id) references archive_it_collection (id) on delete restrict on update restrict;
 create index ix_seed_collection_2 on seed (collection_id);
 alter table seed_comment add constraint fk_seed_comment_seed_3 foreign key (seed_id) references seed (id) on delete restrict on update restrict;
 create index ix_seed_comment_seed_3 on seed_comment (seed_id);
+alter table seed_metadata add constraint fk_seed_metadata_seed_4 foreign key (seed_id) references seed (id) on delete restrict on update restrict;
+create index ix_seed_metadata_seed_4 on seed_metadata (seed_id);
 
 
 
@@ -97,11 +118,15 @@ drop table if exists alert_message;
 
 drop table if exists archive_it_collection;
 
+drop table if exists collection_metadata;
+
 drop table if exists metadata;
 
 drop table if exists seed;
 
 drop table if exists seed_comment;
+
+drop table if exists seed_metadata;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
@@ -109,9 +134,13 @@ drop sequence if exists alert_message_seq;
 
 drop sequence if exists archive_it_collection_seq;
 
+drop sequence if exists collection_metadata_seq;
+
 drop sequence if exists metadata_seq;
 
 drop sequence if exists seed_seq;
 
 drop sequence if exists seed_comment_seq;
+
+drop sequence if exists seed_metadata_seq;
 

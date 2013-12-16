@@ -7,6 +7,21 @@
     if ($("#messages-panel .alert").size() == 0	) {
         $("#messages-panel").hide();
     };
+    
+    $(".activate").bind('click', function () {
+    $.ajax({
+		type: "PUT",
+		url: "/collections/" + $(this).attr("data-id"),
+		data: { status:"@Status.ACTIVE"}
+		})
+		.success(function(msg){
+			  window.location.replace("/collections/");
+			})
+		.error(function( msg ) {
+			alert( "Error activating collection on server: " + msg );
+		});
+	});
+	
     $(".alert").bind('closed.bs.alert', function () {
     $.ajax({
 		type: "DELETE",
@@ -64,9 +79,9 @@
                 </tr>
                 @for(collection <- activeCollections) {
                 <tr>
-                  <td><p><a href="/collections/@collection.getId()">@collection.getName()</a></p></td>
+                  <td><p><strong><a href="/collections/@collection.getId()">@collection.getName()</a></strong></p></td>
                   <td><p>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
-                  <td><p>@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp;&nbsp;<button class="btn btn-default"> CRAWL NOW </button></p></td></p></td>
+                  <td><p>@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp;&nbsp;<button class="btn btn-default light-gray-bg"> CRAWL NOW </button></p></td></p></td>
                 </tr>
                 }
               </table>
@@ -85,11 +100,8 @@
                 <tr>
                   <td><p><a href="/collections/@collection.getId()">@collection.getName()</a></p></td>
                   <td><p>@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
-                  <td><form action="@routes.CollectionController.update(collection)" method="POST">
-                        <input class="btn btn-default" type="submit" value="Activate Collection">
-                        <input type="hidden" name="status" value="@Status.ACTIVE">
-                      </form>
-                      </p></td>
+                  <td><a href="javascript:void(0);" data-id="@collection.getId()" class="activate">Activate Collection</a>
+                  </td>
                 </tr>
                 }
               </table>

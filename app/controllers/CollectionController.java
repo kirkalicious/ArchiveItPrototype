@@ -5,9 +5,9 @@ import java.util.List;
 import models.AlertMessage;
 import models.ArchiveItCollection;
 import models.ArchiveItCollectionTopic;
+import models.CollectionMetadata;
 import models.CrawlFrequency;
 import models.DublinCoreMetadata;
-import models.Metadata;
 import models.Seed;
 import models.SeedComment;
 import models.SeedType;
@@ -138,18 +138,18 @@ public class CollectionController extends Controller {
 				"Hispanic Literature", CrawlFrequency.DAILY,
 				ArchiveItCollectionTopic.ARTS, null, null);
 
-		Metadata data1 = new Metadata(null,
+		CollectionMetadata data1 = new CollectionMetadata(
 				DublinCoreMetadata.DESCRIPTION.getValue(),
 				"This is a description");
 		data1.setCollection(collection);
 		collection.metadata.add(data1);
 
-		Metadata data2 = new Metadata(null,
+		CollectionMetadata data2 = new CollectionMetadata(
 				DublinCoreMetadata.PUBLISHER.getValue(), "Random House");
 		data2.setCollection(collection);
 		collection.metadata.add(data2);
 
-		Metadata data3 = new Metadata(null,
+		CollectionMetadata data3 = new CollectionMetadata(
 				DublinCoreMetadata.PUBLISHER.getValue(), "Random Bus");
 		data3.setCollection(collection);
 		collection.metadata.add(data3);

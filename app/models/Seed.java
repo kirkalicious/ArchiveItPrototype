@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class Seed extends Model implements PathBindable<Seed> {
 
 	@OneToMany(mappedBy = "seed", cascade = CascadeType.ALL)
 	private List<SeedComment> comments;
+
+	@OneToMany(mappedBy = "seed", cascade = CascadeType.ALL)
+	public List<SeedMetadata> metadata = new ArrayList<SeedMetadata>();
 
 	@ManyToOne
 	private ArchiveItCollection collection;
@@ -180,5 +184,13 @@ public class Seed extends Model implements PathBindable<Seed> {
 	@Override
 	public String unbind(String arg0) {
 		return this.id.toString();
+	}
+
+	public List<SeedMetadata> getSeedMetadata() {
+		return metadata;
+	}
+
+	public void setSeedMetadata(List<SeedMetadata> metadata) {
+		this.metadata = metadata;
 	}
 }

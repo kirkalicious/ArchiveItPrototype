@@ -94,7 +94,7 @@ $(document).ready(function(){
         <div class="col-md-12">
           <div class="panel" id="collection-head-panel">
             <div class="panel-heading">Collection</div>
-            <div class="panel-body offwhite-bg">
+            <div class="panel-body offwhite-bg" style="margin-bottom:0">
               <div class="row">
                 <div class="col-md-8 inline">
                   <button id="pencil" class="btn btn-default offwhite-bg" style="margin-bottom:5px;float:left;border:none; padding-left:6px;padding-right:6px;">
@@ -128,12 +128,12 @@ $(document).ready(function(){
             <div class="row">
               <div class="col-md-12">
                 <div class="navbar navbar-inverse" style="min-height:25px">
-          		<ul class="navbar-nav nav nav-justified" style="padding:0;margin:0;">
-                    <li><a href="#" type="button" class="btn inverse">CRAWL SCOPE</a></li>
-                    <li><a href="#" type="button" class="btn inverse">COLLECTION METADATA</a></li>
-                    <li><a href="#" type="button" class="btn inverse">DOCUMENT METADATA</a></li>
-                    <li><a href="#" type="button" class="btn inverse">REPORTS</a></li>
-                    <li><a href="#" type="button" class="btn inverse">MISSING URLS</a></li>
+          		<ul class="navbar-nav nav nav-justified" style="margin:0;">
+                    <li class="divider-vertical"><a href="#" type="button" class="btn inverse plain">CRAWL SCOPE</a></li>
+                    <li class="divider-vertical"><a href="#" type="button" class="btn inverse plain">COLLECTION METADATA</a></li>
+                    <li class="divider-vertical"><a href="#" type="button" class="btn inverse plain">DOCUMENT METADATA</a></li>
+                    <li class="divider-vertical"><a href="#" type="button" class="btn inverse plain">REPORTS</a></li>
+                    <li><a href="#" type="button" class="btn inverse plain">MISSING URLS</a></li>
                   </ul>
                 </div>
               </div>
@@ -155,7 +155,7 @@ $(document).ready(function(){
                   	}
                   </select></td>
                   <td ><p style="margin-top: 10px">@collection.getDateLastCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz")</p></td>
-                  <td><p style="margin-top: 3px;">@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp; <button class="btn">CRAWL NOW</button></p></td>
+                  <td><p style="margin-top: 3px;">@collection.getDateNextCrawl().format("MM/dd/yyyy 'at' hh:mm a zzz") &nbsp; <button class="btn btn-default light-gray-bg"> CRAWL NOW </button></p></td>
                 </tr>
               </table>
             </div>
@@ -165,18 +165,23 @@ $(document).ready(function(){
             <div class="panel-body">
               
               <div class="row offwhite-bg" style="margin:0 0 20px;">
-              @helper.form(action = routes.SeedController.save(), 'id -> "newSeedForm") {
-              	<div class="col-md-6">
-              	  @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL", 'minlength->"4", 'type->"url", 'required->true)
-              	  <input type="hidden" name="collectionId" value='@collection.getId' >
-                </div>
-                <div class="col-md-2">
-                  <input type="submit" class="btn btn-primary" value="ADD SEED">
-                </div>
-              }
-                <div class="col-md4 inline">
-                	<a href="">+ Add seeds in bulk</a>
-                </div>
+              <div class="col-md-12">
+                @helper.form(action = routes.SeedController.save(), 'id -> "newSeedForm", 'class->"form-inline") {          	
+              	  <div class="form-group">
+              	    <label class="sr-only" for="url">Seed URL</label>
+              	    @helper.inputText(seedForm("url"),'_label->"", 'class->"form-control", 'placeholder->"Enter a new seed URL", 'minlength->"4", 'type->"url", 'required->true, 'style->"width:400px")
+              	  </div>
+              	  <div class="form-group">
+              	    <input type="hidden" name="collectionId" value='@collection.getId' >
+              	  </div>
+                  <div class="form-group" style="margin-top:10px;">
+                  <input type="submit" class="btn btn-default light-gray-bg" value="ADD SEED">
+                  </div>
+                  <div class="form-group" style="margin-top:10px;padding-left:50px">
+                  <a href="#" >+ Add seeds in bulk</a>
+                  </div>
+                }
+              </div>
               </div>
               <table id="seed-table-active" class="table table-condensed" style="width: 100%">
                 <thead>

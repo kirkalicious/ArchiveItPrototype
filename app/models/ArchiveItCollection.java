@@ -37,7 +37,7 @@ public class ArchiveItCollection extends Model implements
 	public List<Seed> seeds = new ArrayList<Seed>();
 	
 	@OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
-	public List<Metadata> metadata = new ArrayList<Metadata>();
+	public List<CollectionMetadata> metadata = new ArrayList<CollectionMetadata>();
 
 	public ArchiveItCollection(Long id, String name, CrawlFrequency frequency,
 			ArchiveItCollectionTopic topic1, ArchiveItCollectionTopic topic2,
@@ -143,11 +143,11 @@ public class ArchiveItCollection extends Model implements
 		this.seeds = seeds;
 	}
 
-	public List<Metadata> getMetadata() {
+	public List<CollectionMetadata> getCollectionMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(List<Metadata> metadata) {
+	public void setCollectionMetadata(List<CollectionMetadata> metadata) {
 		this.metadata = metadata;
 	}
 
