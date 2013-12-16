@@ -54,7 +54,6 @@ $(document).ready(function(){
 			url: "/seeds/" + $(this).attr("seedId"),
 			data: {status: $(this).find("option:selected").val()}
 			};
-		console.log(request);
 		$.ajax(request)
 		    .success(function(msg){
 		    	$('.bottom-right').notify({
@@ -71,7 +70,6 @@ $(document).ready(function(){
 			url: "/seeds/" + $(this).attr("seedId"),
 			data: {frequency: $(this).find("option:selected").val()}
 			};
-		console.log(request);
 		$.ajax(request)
 		    .success(function(msg){
 		    	$('.bottom-right').notify({
@@ -84,8 +82,12 @@ $(document).ready(function(){
 	});
 	
 	$('.metadata').tagit({
+	  onTagExists: function(event, ui) {
+		  return false;
+	  },
       beforeTagAdded: function(event, ui) {
-      $.ajax({
+        if (!ui.duringInitialization) {
+          $.ajax({
 			type: "POST",
 			url: "/seeds/" + @seed.getId() + "/meta",
 			data: {key: event.target.id,
@@ -99,11 +101,30 @@ $(document).ready(function(){
 				 })
 			.error(function( msg ) {
 				alert( "Unable to add tag");
+				return false;
 			});
-        // do something special
-        console.log(event.target.id);
-        console.log(ui.tagLabel);
+          // do something special
+        }
       },
+      beforeTagRemoved: function(event, ui) {
+          $.ajax({
+    			type: "DELETE",
+    			url: "/seeds/" + @seed.getId() + "/meta",
+    			data: {key: event.target.id,
+    			       value: ui.tagLabel
+    			       }
+    			})
+    		    .success(function(msg){
+    		    	$('.bottom-right').notify({
+    		    	    message: { text: 'Tag Deleted' }
+    		    	  }).show();
+    				 })
+    			.error(function( msg ) {
+    				alert( "Unable to delete tag");
+    				return false;
+    			});
+            // do something special
+          },
       allowSpaces: true
 	});
 });

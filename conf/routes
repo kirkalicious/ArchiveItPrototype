@@ -19,7 +19,7 @@ GET		/seeds/:id					controllers.SeedController.details(id: models.Seed)
 PUT     /seeds/:id					controllers.SeedController.update(id: models.Seed)
 POST	/seeds/:id/comment			controllers.SeedController.addComment(id: models.Seed)
 POST	/seeds/:id/meta				controllers.SeedController.addMetadata(id: models.Seed)
-DELETE	/seeds/:id/meta/:meta		controllers.SeedController.deleteMetadata(id: models.Seed, meta: models.SeedMetadata)
+DELETE	/seeds/:id/meta				controllers.SeedController.deleteMetadata(id: models.Seed)
 
 # Map Bootstrap images
 GET     /assets/fonts/glyphicons-halflings-regular.eot            controllers.Assets.at(path="/public", file="/fonts/glyphicons-halflings-regular.eot")

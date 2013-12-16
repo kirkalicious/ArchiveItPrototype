@@ -21,6 +21,7 @@ package controllers;
 
 
 
+
 import models.ArchiveItCollection;
 import models.Seed;
 import models.SeedComment;
@@ -170,7 +171,18 @@ public class SeedController extends Controller
 		return ok();
 	}
 
-	public static Result deleteMetadata(Seed seed, SeedMetadata meta) {
+	public static Result deleteMetadata(Seed seed)
+	{
+		DynamicForm form = Form.form().bindFromRequest();
+		String key = form.get("key");
+		String value = form.get("value");
+		SeedMetadata meta = SeedMetadata.find.where().eq("key", key)
+				.eq("value", value).findUnique();
+		if (meta == null)
+		{
+			return badRequest("Cannot find Metadata");
+		}
+
 		seed.getSeedMetadata().remove(meta);
 		meta.delete();
 		Ebean.save(seed);
